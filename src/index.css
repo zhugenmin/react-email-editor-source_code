@@ -1,3 +1,8 @@
+@import '~antd/dist/antd.compact.css';
+@import './assets/App.css';
+@import './assets/RichText.css';
+@import './assets/ImageBlock.css';
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -10,4 +15,8 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.App{
+  height: calc(100vh - 60px);
 }
