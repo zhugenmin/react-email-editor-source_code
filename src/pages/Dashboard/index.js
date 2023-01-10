@@ -24,6 +24,7 @@ function Dashboard(props) {
   const [photos, setPhotos] = useState({
     list: null,
     pagination: 1,
+    query: "",
     isLoading: true,
     scrollLoading: false,
   });
@@ -258,8 +259,8 @@ function Dashboard(props) {
 
   const searchPhotos = (value) => {
     let pagination = photos.pagination;
-    setPhotos({ ...photos, list: [], isLoading: true, pagination: 1 });
-    fetchPhotos(pagination, "40", value).then((response) => setPhotos({ ...photos, list: response.photos, isLoading: false }));
+    setPhotos({ ...photos, list: [], isLoading: true, pagination: 1, query: value });
+    fetchPhotos(pagination, "40", value).then((response) => setPhotos({ ...photos, list: response.photos, isLoading: false, query: value }));
   };
 
   const renderCardDom = (title, dom) => {
@@ -376,18 +377,21 @@ function Dashboard(props) {
     let leftHeight = 0;
     let rightHeight = 0;
     if (!photos.list) {
-      fetchPhotos(photos.pagination, "40").then((response) => setPhotos({ ...photos, list: response.photos, isLoading: false }));
+      fetchPhotos(photos.pagination, "40", photos.query).then((response) =>
+        setPhotos({ ...photos, list: response.photos, isLoading: false, scrollLoading: false })
+      );
     } else {
       if (photos.list.length > 1) {
         leftHeight = Math.floor((141 / Number(photos.list[0].width)) * photos.list[0].height) + 6;
         rightHeight = Math.floor((141 / Number(photos.list[1].width)) * photos.list[1].height) + 6;
       }
     }
+
     return (
       <div className="flex-1 h-full p-6 overflow-hidden">
         <motion.div className="h-full" initial={{ opacity: 0, y: 1000 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-4">
-            <Input.Search onSearch={searchPhotos} loading={photos.isLoading} />
+            <Input.Search onSearch={searchPhotos} loading={photos.isLoading || photos.scrollLoading} />
             <a href="https://www.pexels.com" rel="noreferrer" target="_blank" className="text-slate-400 text-sm hover:text-slate-400">
               由Pexels提供技术支持
             </a>
@@ -400,9 +404,15 @@ function Dashboard(props) {
               if (scrollBottom < 20 && !photos.scrollLoading) {
                 setPhotos({ ...photos, scrollLoading: true });
                 setTimeout(() => {
-                  fetchPhotos(photos.pagination + 1, "40").then((response) => {
+                  fetchPhotos(photos.pagination + 1, "40", photos.query).then((response) => {
                     event.target.scrollTop = event.target.scrollTop - 50;
-                    setPhotos({ ...photos, pagination: photos.pagination + 1, list: photos.list.concat(response.photos) });
+                    setPhotos({
+                      ...photos,
+                      pagination: photos.pagination + 1,
+                      list: photos.list.concat(response.photos),
+                      scrollLoading: false,
+                      isLoading: false,
+                    });
                   });
                 }, 1000);
               }
@@ -469,7 +479,7 @@ function Dashboard(props) {
               <div
                 onClick={() => {
                   setCurrentSideBarKey(key);
-                  setPhotos({ list: null, pagination: 1, isLoading: true, scrollLoading: false });
+                  setPhotos({ list: null, pagination: 1, isLoading: true, scrollLoading: false, query: "" });
                 }}
                 className={clsx("px-6 py-4 cursor-pointer text-center select-none transition-all", {
                   "side-bar-tab-item-active": currentSideBarKey === key,
@@ -549,9 +559,7 @@ function Dashboard(props) {
           open={Boolean(!isDragStart && currentItem)}
           onClose={() => setCurrentItem(null)}
         >
-          {currentItem && (
-            <StyleSettings currentItem={currentItem} setCurrentItem={setCurrentItem} setBlockList={setBlockList} blockList={blockList} />
-          )}
+          {currentItem && <StyleSettings currentItem={currentItem} setCurrentItem={setCurrentItem} />}
         </Drawer>
       </div>
     </div>

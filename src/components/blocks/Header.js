@@ -6,11 +6,12 @@ import { connect } from "react-redux";
 import { setPreviewMode } from "../../redux/reducerCollection/AuthOptions";
 import { Modal } from "antd";
 import dataToHtml from "../../utils/dataToHTML";
+import { deepClone } from "../../utils/helpers";
 
 const Header = (props) => {
   const { previewMode, setPreviewMode, blockList, setBlockList, blockListAction, bodySettings } = props;
   const [blockListHistory, setBlockListHistory] = useState({
-    histories: [blockList],
+    histories: [],
     index: 0,
   });
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
@@ -18,8 +19,15 @@ const Header = (props) => {
   const { histories, index } = blockListHistory;
   useEffect(() => {
     //第一次渲染不添加
+
+    if (blockListAction === "firstRender") {
+      setBlockListHistory({ histories: [deepClone(blockList)], index: 0 });
+    }
     if (blockListAction === "modify") {
-      setBlockListHistory({ histories: [...histories.slice(0, index + 1), ...[blockList]], index: index + 1 });
+      setBlockListHistory({
+        histories: [...histories.slice(0, index + 1), ...[deepClone(blockList)]],
+        index: index + 1,
+      });
     }
   }, [blockList]);
 
@@ -43,7 +51,6 @@ const Header = (props) => {
 
   return (
     <>
-    {console.log(histories)}
       <div className="h-20 border flex items-center justify-between px-10 bg-slate-800">
         <div className="w-1/3">
           <FontAwesomeIcon
@@ -78,7 +85,7 @@ const Header = (props) => {
             onClick={() => {
               if (histories[index - 1]) {
                 setBlockListHistory({ ...blockListHistory, index: index - 1 });
-                setBlockList(histories[index - 1], "prev");
+                setBlockList(deepClone(histories[index - 1]), "prev");
               }
             }}
             icon={faUndo}
@@ -91,7 +98,7 @@ const Header = (props) => {
             onClick={() => {
               if (histories[index + 1]) {
                 setBlockListHistory({ ...blockListHistory, index: index + 1, isFirstRender: true });
-                setBlockList(histories[index + 1], "next");
+                setBlockList(deepClone(histories[index + 1]), "next");
               }
             }}
             icon={faRedo}
@@ -104,13 +111,6 @@ const Header = (props) => {
             <FontAwesomeIcon icon={faFileExport} />
             导出html
           </button>
-          <a
-            className="text-white bg-blue-600 p-3 px-6 rounded-md font-semibold hover:bg-blue-500"
-            href={`mailto:1042300453@qq.com?subject=test&cc=1042300453@qq.com&subject=主题&body=${dataToHtml({ bodySettings, blockList })}`}
-          >
-            <FontAwesomeIcon icon={faFileExport} />
-            Send Email
-          </a>
         </div>
       </div>
       <Modal

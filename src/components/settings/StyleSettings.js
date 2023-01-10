@@ -5,6 +5,7 @@ import { InputNumber, Popover, Select, Modal, Tabs, Collapse, Input, Switch, Sli
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 import { defaultColumnsSettings } from "../../utils/defaultColumnsSettings";
+import { setBlockList } from "../../redux/reducerCollection/AuthOptions";
 
 const StyleSettings = (props) => {
   const { blockList, setBlockList, currentItem, setCurrentItem, previewMode } = props;
@@ -876,6 +877,10 @@ const StyleSettings = (props) => {
 
 const mapStateToProps = (state) => ({
   previewMode: state.AuthOptions.previewMode,
+  blockList: state.AuthOptions.blockList,
 });
 
-export default connect(mapStateToProps)(StyleSettings);
+const mapDispatchToProps = (dispatch) => ({
+  setBlockList: (blockList, action) => dispatch(setBlockList(blockList, action)),
+});
+export default connect(mapStateToProps, mapDispatchToProps)(StyleSettings);
