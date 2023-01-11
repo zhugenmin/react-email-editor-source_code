@@ -8,6 +8,7 @@ import HeadingBlock from "./HeadingBlock";
 import ButtonBlock from "./ButtonBlock";
 import DividerBlock from "./DividerBlock";
 import ImageBlock from "./ImageBlock";
+import { deepClone } from "../../utils/helpers";
 
 const Column = (props) => {
   const {
@@ -36,7 +37,7 @@ const Column = (props) => {
   };
 
   const deleteContentBlockList = (blockIndex, index, itemIndex) => {
-    let newBlockList = JSON.parse(JSON.stringify(blockList));
+    let newBlockList = deepClone(blockList);
     let newData = newBlockList[blockIndex].config.data[index].data.filter((item, idx) => {
       return idx !== itemIndex;
     });
@@ -84,7 +85,7 @@ const Column = (props) => {
     const dropDom = event.target;
     if (dropDom.dataset.name === "dragTools") {
       const indexArray = dropDom.dataset.index.split("-");
-      let newBlockList = JSON.parse(JSON.stringify(blockList));
+      let newBlockList = deepClone(blockList);
       const newBlockListConfig = newBlockList[indexArray[0]].config.data[indexArray[1]].data;
 
       if (currentItem.type === "add") {
@@ -168,7 +169,7 @@ const Column = (props) => {
   const dropEmptyContent = (index) => (event) => {
     event.preventDefault();
     event.stopPropagation();
-    let newBlockList = JSON.parse(JSON.stringify(blockList));
+    let newBlockList = deepClone(blockList);
     if (currentItem.type === "moveBlock") {
       const indexArray = currentItem.index.split("-");
       newBlockList = deleteContentBlockList(Number(indexArray[0]), Number(indexArray[1]), Number(indexArray[2]));

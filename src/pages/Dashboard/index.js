@@ -14,6 +14,15 @@ import { defaultStyles } from "../../utils/defaultColumnsSettings";
 import fetchPhotos from "../../utils/pexels";
 import Header from "../../components/blocks/Header";
 import { setBlockList } from "../../redux/reducerCollection/AuthOptions";
+import { deepClone } from "../../utils/helpers";
+
+// TODO:
+// 1.拷贝功能
+// 2.图片block可以选择pexels的图片
+// 3.图片上传
+// 4.Social Link制作
+// 5.columns 添加可上传背景图片
+// 6.spacer block
 
 function Dashboard(props) {
   const { previewMode, blockList, setBlockList } = props;
@@ -143,7 +152,7 @@ function Dashboard(props) {
   };
 
   const appendBlockList = (index) => {
-    const newBlockList = JSON.parse(JSON.stringify(blockList));
+    const newBlockList = deepClone(blockList);
     let newCurrentItem = currentItem;
 
     if (newCurrentItem.type === "moveBlock") {
@@ -189,7 +198,7 @@ function Dashboard(props) {
   };
 
   const swapBlockList = (index1, index2) => {
-    const newBlockList = JSON.parse(JSON.stringify(blockList));
+    const newBlockList = deepClone(blockList);
     let newCurrentItem = currentItem;
     if (newCurrentItem.data.key !== "column") {
       newCurrentItem.data = {
@@ -251,7 +260,7 @@ function Dashboard(props) {
   };
 
   const dragStart = (item) => (event) => {
-    setCurrentItem({ data: JSON.parse(JSON.stringify(item)), type: "add", index: blockList.length + 1 });
+    setCurrentItem({ data: deepClone(item), type: "add", index: blockList.length + 1 });
     setIsDragStart(true);
     event.target.style.border = "1px dashed #ccc";
     event.target.children[0] && event.target.children[0].classList.add("sidebar-block-move");

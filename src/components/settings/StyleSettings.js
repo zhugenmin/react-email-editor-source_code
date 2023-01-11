@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
 import { defaultColumnsSettings } from "../../utils/defaultColumnsSettings";
 import { setBlockList } from "../../redux/reducerCollection/AuthOptions";
+import { deepClone } from "../../utils/helpers";
 
 const StyleSettings = (props) => {
   const { blockList, setBlockList, currentItem, setCurrentItem, previewMode } = props;
@@ -27,13 +28,13 @@ const StyleSettings = (props) => {
   };
 
   const inputChange = (key) => (value) => {
-    const newStyles = JSON.parse(JSON.stringify(currentItem.data.styles || currentItem.data.config.styles));
+    const newStyles = deepClone(currentItem.data.styles || currentItem.data.config.styles);
     newStyles[previewMode][key] = value;
     updateBlockStyles(newStyles);
   };
 
   const colorChange = (key) => (color) => {
-    const newStyles = JSON.parse(JSON.stringify(currentItem.data.styles || currentItem.data.config.styles));
+    const newStyles = deepClone(currentItem.data.styles || currentItem.data.config.styles);
     newStyles[previewMode][key] = color.hex;
     updateBlockStyles(newStyles);
   };
@@ -76,14 +77,14 @@ const StyleSettings = (props) => {
   };
 
   const changeColumnStyles = (key, index) => (value) => {
-    const newData = { ...currentItem.data.config };
+    const newData = deepClone(currentItem.data.config);
     newData.data[index].styles[previewMode][key] = value;
     updateColumnStyles(newData);
   };
 
   const updateColumnStyles = (newData) => {
-    const newCurrentItem = { ...currentItem };
-    const newBlockList = [...blockList];
+    const newCurrentItem = deepClone(currentItem);
+    const newBlockList = deepClone(blockList);
     newCurrentItem.data.config = {
       ...newData,
     };
@@ -95,8 +96,8 @@ const StyleSettings = (props) => {
   };
 
   const updateBlockStyles = (newStyles) => {
-    const newCurrentItem = { ...currentItem };
-    const newBlockList = [...blockList];
+    const newCurrentItem = deepClone(currentItem);
+    const newBlockList = deepClone(blockList);
     const blockIndexArray = String(currentItem.index).split("-");
     if (blockIndexArray.length === 1) {
       newCurrentItem.data.styles = newStyles;
@@ -141,8 +142,8 @@ const StyleSettings = (props) => {
     updateBlockConfig(newConfig);
   };
   const updateBlockConfig = (newConfig) => {
-    const newBlockList = [...blockList];
-    const newCurrentItem = { ...currentItem };
+    const newCurrentItem = deepClone(currentItem);
+    const newBlockList = deepClone(blockList);
     const blockIndexArray = String(currentItem.index).split("-");
     newCurrentItem.data.config = newConfig;
     newBlockList[blockIndexArray[0]].config.data[blockIndexArray[1]].data[blockIndexArray[2]].config = newConfig;
@@ -497,8 +498,8 @@ const StyleSettings = (props) => {
   const renderContentStyles = () => {
     const textAlign = findStyleItem(currentItem.data.config.contentStyles, "textAlign");
     const contentInputChange = (key) => (value) => {
-      const newCurrentItem = currentItem;
-      const newBlockList = blockList;
+      const newCurrentItem = deepClone(currentItem);
+      const newBlockList = deepClone(blockList);
       currentItem.data.config.contentStyles[previewMode][key] = value;
       const blockIndexArray = String(currentItem.index).split("-");
       newBlockList[blockIndexArray[0]].config.data[blockIndexArray[1]].data[blockIndexArray[2]].config.contentStyles[key] = value;
@@ -615,8 +616,8 @@ const StyleSettings = (props) => {
 
     const linkChange = (event) => {
       const newValue = event.target.value;
-      const newCurrentItem = currentItem;
-      const newBlockList = blockList;
+      const newCurrentItem = deepClone(currentItem);
+      const newBlockList = deepClone(blockList);
       currentItem.data.config.linkURL = newValue;
       const blockIndexArray = String(currentItem.index).split("-");
       newBlockList[blockIndexArray[0]].config.data[blockIndexArray[1]].data[blockIndexArray[2]].config.linkURL = newValue;
@@ -708,8 +709,8 @@ const StyleSettings = (props) => {
 
     const linkChange = (key) => (event) => {
       const newValue = event.target.value;
-      const newCurrentItem = currentItem;
-      const newBlockList = blockList;
+      const newCurrentItem = deepClone(currentItem);
+      const newBlockList = deepClone(blockList);
       currentItem.data.config[key] = newValue;
       const blockIndexArray = String(currentItem.index).split("-");
       newBlockList[blockIndexArray[0]].config.data[blockIndexArray[1]].data[blockIndexArray[2]].config[key] = newValue;
