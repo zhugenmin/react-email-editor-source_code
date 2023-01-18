@@ -500,9 +500,9 @@ const StyleSettings = (props) => {
     const contentInputChange = (key) => (value) => {
       const newCurrentItem = deepClone(currentItem);
       const newBlockList = deepClone(blockList);
-      currentItem.data.config.contentStyles[previewMode][key] = value;
+      newCurrentItem.data.config.contentStyles[previewMode][key] = value;
       const blockIndexArray = String(currentItem.index).split("-");
-      newBlockList[blockIndexArray[0]].config.data[blockIndexArray[1]].data[blockIndexArray[2]].config.contentStyles[key] = value;
+      newBlockList[blockIndexArray[0]].config.data[blockIndexArray[1]].data[blockIndexArray[2]].config.contentStyles[previewMode][key] = value;
       setBlockList([...newBlockList]);
       setCurrentItem({ ...newCurrentItem });
     };

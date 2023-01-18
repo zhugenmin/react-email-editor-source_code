@@ -432,12 +432,12 @@ function Dashboard(props) {
                 let left = 0;
                 let top = 0;
                 if (index === 1) {
-                  left = "51%";
+                  left = 146.5;
                 } else if (index > 1) {
                   const { width, height } = image;
                   const imageHeight = Math.floor((141 / Number(width)) * height);
                   if (leftHeight > rightHeight) {
-                    left = "51%";
+                    left = 146.5;
                     top = rightHeight;
                     rightHeight += imageHeight + 6;
                   } else {
@@ -487,8 +487,10 @@ function Dashboard(props) {
             return (
               <div
                 onClick={() => {
-                  setCurrentSideBarKey(key);
-                  setPhotos({ list: null, pagination: 1, isLoading: true, scrollLoading: false, query: "" });
+                  if (key !== currentSideBarKey) {
+                    setCurrentSideBarKey(key);
+                    setPhotos({ list: null, pagination: 1, isLoading: true, scrollLoading: false, query: "" });
+                  }
                 }}
                 className={clsx("px-6 py-4 cursor-pointer text-center select-none transition-all", {
                   "side-bar-tab-item-active": currentSideBarKey === key,

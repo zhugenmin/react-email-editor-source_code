@@ -313,7 +313,7 @@ const Column = (props) => {
           </span>
         </div>
         <div className="w-full h-full absolute" onDragOver={dragOver} onDrop={dropElement}>
-          {isDragStart && (
+          {isDragStart && currentItem.data.key === "column" && (
             <>
               <div className="block-move-content-top" data-name="dragTools" data-position="top" data-index={blockIndex}></div>
               <div className="block-move-content-bottom" data-name="dragTools" data-position="bottom" data-index={blockIndex + 1}></div>
