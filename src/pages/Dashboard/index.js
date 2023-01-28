@@ -63,9 +63,9 @@ function Dashboard(props) {
       key: "blocks",
     },
     {
-      name: "整体",
+      name: "主题",
       icon: faMailBulk,
-      key: "body",
+      key: "theme",
     },
     {
       name: "图片",
@@ -267,9 +267,8 @@ function Dashboard(props) {
   };
 
   const searchPhotos = (value) => {
-    let pagination = photos.pagination;
-    setPhotos({ ...photos, list: [], isLoading: true, pagination: 1, query: value });
-    fetchPhotos(pagination, "40", value).then((response) => setPhotos({ ...photos, list: response.photos, isLoading: false, query: value }));
+    setPhotos({ ...photos, list: [], isLoading: true });
+    fetchPhotos(1, "40", value).then((response) => setPhotos({ ...photos, list: response.photos, isLoading: false, query: value, pagination: 1 }));
   };
 
   const renderCardDom = (title, dom) => {
@@ -347,11 +346,11 @@ function Dashboard(props) {
     );
   };
 
-  const renderBody = () => {
+  const renderTheme = () => {
     return (
       <div className="p-6 flex-1 overflow-hidden">
         <motion.div initial={{ opacity: 0, y: 1000 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="text-xl font-semibold mb-10">邮件整体设置</div>
+          <div className="text-xl font-semibold mb-10">邮件主题设置</div>
           <div>{renderColorPicker("字体颜色", "color")}</div>
           <div>{renderColorPicker("邮件背景颜色", "backgroundColor")}</div>
           <div>
@@ -505,7 +504,7 @@ function Dashboard(props) {
           })}
         </div>
         {currentSideBarKey === "blocks" && renderBlocks()}
-        {currentSideBarKey === "body" && renderBody()}
+        {currentSideBarKey === "theme" && renderTheme()}
         {currentSideBarKey === "photos" && renderPhotos()}
       </div>
     );

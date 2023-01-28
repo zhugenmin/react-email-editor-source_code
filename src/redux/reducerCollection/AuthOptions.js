@@ -17,9 +17,7 @@ export const setBlockList =
   (blockList, action = "modify") =>
   (dispatch, getState) => {
     const currentBlockListAction = getState().AuthOptions.blockListAction;
-    if (currentBlockListAction !== action) {
-      dispatch(setBlockListAction(action));
-    }
+    currentBlockListAction !== action && dispatch(setBlockListAction(action))
     dispatch({
       type: SET_BLOCK_LIST,
       blockList: blockList,

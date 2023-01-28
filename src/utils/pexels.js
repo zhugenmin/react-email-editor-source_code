@@ -5,7 +5,7 @@ const client = createClient("563492ad6f91700001000001efd3eadbee21486a9756a5576e4
 
 const fetchPhotos = (pagination, pages, query) => {
   if (!query) {
-    query = "happy";
+    query = "fun";
   }
   return new Promise((resolve, reject) => {
     client.photos
