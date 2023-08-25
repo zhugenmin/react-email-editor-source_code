@@ -2,8 +2,19 @@ import { useState, Fragment } from "react";
 import { Drawer, Input, Popover, InputNumber, Spin } from "antd";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChromePicker } from "react-color";
-import { motion } from "framer-motion";
-import { faColumns, faMinusSquare, faHeading, faFont, faGripLines, faImages, faCubes, faMailBulk, faImage } from "@fortawesome/free-solid-svg-icons";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  faColumns,
+  faMinusSquare,
+  faHeading,
+  faFont,
+  faGripLines,
+  faImages,
+  faCubes,
+  faMailBulk,
+  faImage,
+  faShareAltSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
 import Column from "../../components/blocks/Column";
 import StyleSettings from "../../components/settings/StyleSettings";
@@ -54,6 +65,7 @@ function Dashboard(props) {
     button: faMinusSquare,
     divider: faGripLines,
     image: faImage,
+    social: faShareAltSquare,
   };
 
   const sidebarTabsList = [
@@ -96,6 +108,10 @@ function Dashboard(props) {
       case "image":
         title = "图片";
         break;
+      case "social":
+        title = "社交链接";
+
+        break;
       default:
         break;
     }
@@ -128,7 +144,17 @@ function Dashboard(props) {
         newCurrentItem.data = {
           name: "列",
           key: "column",
-          styles: { ...defaultStyles },
+          styles: {
+            desktop: {
+              backgroundColor: "transparent",
+              paddingTop: 0,
+              paddingLeft: 0,
+              paddingRight: 0,
+              paddingBottom: 0,
+              contentBackground: "transparent",
+            },
+            mobile: {},
+          },
           config: {
             columns: 1,
             type: "full",
@@ -137,7 +163,16 @@ function Dashboard(props) {
                 name: "content",
                 key: "content",
                 width: "100%",
-                styles: { ...defaultStyles },
+                styles: {
+                  desktop: {
+                    backgroundColor: "transparent",
+                    paddingTop: 0,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    paddingBottom: 0,
+                  },
+                  mobile: {},
+                },
                 data: [{ ...newCurrentItem.data }],
               },
             ],
@@ -148,7 +183,6 @@ function Dashboard(props) {
     } else {
       setBlockList(swapBlockList(currentItem.index, blockList.length + 1));
     }
-    setCurrentItem(null);
   };
 
   const appendBlockList = (index) => {
@@ -170,27 +204,6 @@ function Dashboard(props) {
       } else {
         newBlockList[indexArray[0]].config.data[indexArray[1]].data = newData;
       }
-    }
-
-    if (newCurrentItem.data.key !== "column") {
-      newCurrentItem.data = {
-        name: "列",
-        key: "column",
-        styles: { ...defaultStyles },
-        config: {
-          columns: 1,
-          type: "full",
-          data: [
-            {
-              name: "content",
-              key: "content",
-              width: "100%",
-              styles: { ...defaultStyles },
-              data: [{ ...newCurrentItem.data }],
-            },
-          ],
-        },
-      };
     }
 
     newBlockList.splice(index, 0, newCurrentItem.data);
@@ -320,10 +333,17 @@ function Dashboard(props) {
     );
   };
 
-  const renderBlocks = () => {
+  const blocksElement = () => {
     return (
-      <div className="flex-1 h-full overflow-hidden">
-        <motion.div initial={{ opacity: 0, y: 1000 }} animate={{ opacity: 1, y: 0 }} className="p-4 flex flex-wrap content-start">
+      <motion.div
+        className="flex-1 h-full overflow-hidden"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.3 }}
+        key="blocks"
+      >
+        <div className="p-4 flex flex-wrap content-start">
           {blockConfigsList.map((item) => {
             return (
               <div
@@ -341,143 +361,159 @@ function Dashboard(props) {
               </div>
             );
           })}
-        </motion.div>
-      </div>
+        </div>
+      </motion.div>
     );
   };
 
-  const renderTheme = () => {
+  const themeElement = () => {
     return (
-      <div className="p-6 flex-1 overflow-hidden">
-        <motion.div initial={{ opacity: 0, y: 1000 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="text-xl font-semibold mb-10">邮件主题设置</div>
-          <div>{renderColorPicker("字体颜色", "color")}</div>
-          <div>{renderColorPicker("邮件背景颜色", "backgroundColor")}</div>
-          <div>
-            {renderCardDom(
-              "行高",
-              <InputNumber
-                className="w-32"
-                addonAfter="px"
-                min={0}
-                max={900}
-                value={Number(bodySettings.contentWidth)}
-                onChange={(value) => setBodySettings({ ...bodySettings, contentWidth: value })}
-              />
-            )}
-          </div>
-          <div>
-            <div className="text-slate-400 font-semibold">标题文本</div>
-            <Input
-              className="mt-4"
-              value={bodySettings.preHeader}
-              onChange={(event) => setBodySettings({ ...bodySettings, preHeader: event.target.value })}
+      <motion.div
+        className="p-6 flex-1 overflow-hidden"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.3 }}
+        key="theme"
+      >
+        <div className="text-xl font-semibold mb-10">邮件主题设置</div>
+        <div>{renderColorPicker("字体颜色", "color")}</div>
+        <div>{renderColorPicker("邮件背景颜色", "backgroundColor")}</div>
+        <div>
+          {renderCardDom(
+            "行高",
+            <InputNumber
+              className="w-32"
+              addonAfter="px"
+              min={0}
+              max={900}
+              value={Number(bodySettings.contentWidth)}
+              onChange={(value) => setBodySettings({ ...bodySettings, contentWidth: value })}
             />
-            <div className="text-gray-400 text-sm mt-2">标题是从收件箱查看电子邮件时跟随在主题行之后的简短摘要文本。</div>
-          </div>
-        </motion.div>
-      </div>
+          )}
+        </div>
+        <div>
+          <div className="text-slate-400 font-semibold">标题文本</div>
+          <Input
+            className="mt-4"
+            value={bodySettings.preHeader}
+            onChange={(event) => setBodySettings({ ...bodySettings, preHeader: event.target.value })}
+          />
+          <div className="text-gray-400 text-sm mt-2">标题是从收件箱查看电子邮件时跟随在主题行之后的简短摘要文本。</div>
+        </div>
+      </motion.div>
     );
   };
 
-  const renderPhotos = () => {
+  const photosElement = () => {
     const imageBlock = blockConfigsList.find(({ key }) => key === "image");
     let leftHeight = 0;
     let rightHeight = 0;
+    let leftPhotos = [];
+    let rightPhotos = [];
     if (!photos.list) {
-      fetchPhotos(photos.pagination, "40", photos.query).then((response) =>
+      fetchPhotos(photos.pagination, "20", photos.query).then((response) =>
         setPhotos({ ...photos, list: response.photos, isLoading: false, scrollLoading: false })
       );
     } else {
-      if (photos.list.length > 1) {
-        leftHeight = Math.floor((141 / Number(photos.list[0].width)) * photos.list[0].height) + 6;
-        rightHeight = Math.floor((141 / Number(photos.list[1].width)) * photos.list[1].height) + 6;
-      }
+      photos.list.forEach((item) => {
+        //  假设图片显示的宽度为200px,高度为自适应,则图片的高度为200/图片宽度*图片高度
+        const { height, width } = item;
+        const imageHeight = (200 / width) * height;
+        if (leftHeight <= rightHeight) {
+          leftPhotos.push(item);
+          leftHeight += imageHeight;
+        } else {
+          rightPhotos.push(item);
+          rightHeight += imageHeight;
+        }
+      });
     }
 
     return (
-      <div className="flex-1 h-full p-6 overflow-hidden">
-        <motion.div className="h-full" initial={{ opacity: 0, y: 1000 }} animate={{ opacity: 1, y: 0 }}>
-          <div className="mb-4">
-            <Input.Search onSearch={searchPhotos} loading={photos.isLoading || photos.scrollLoading} />
-            <a href="https://www.pexels.com" rel="noreferrer" target="_blank" className="text-slate-400 text-sm hover:text-slate-400">
-              由Pexels提供技术支持
-            </a>
-          </div>
+      <motion.div
+        className="flex-1 h-full p-6 overflow-hidden"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 10 }}
+        transition={{ duration: 0.3 }}
+        key="photos"
+      >
+        <div className="mb-4">
+          <Input.Search onSearch={searchPhotos} loading={photos.isLoading || photos.scrollLoading} />
+          <a href="https://www.pexels.com" rel="noreferrer" target="_blank" className="text-slate-400 text-sm hover:text-slate-400">
+            由Pexels提供技术支持
+          </a>
+        </div>
+        <div className="relative h-[calc(100%-58px)]">
           <div
-            className="photos-container relative h-[calc(100%-58px)] overflow-auto"
+            className="photos-container grid grid-cols-2 gap-4 overflow-auto h-full"
             style={{ overflowAnchor: "none" }}
             onScroll={(event) => {
               let scrollBottom = event.target.scrollHeight - event.target.offsetHeight - event.target.scrollTop;
               if (scrollBottom < 20 && !photos.scrollLoading) {
                 setPhotos({ ...photos, scrollLoading: true });
-                setTimeout(() => {
-                  fetchPhotos(photos.pagination + 1, "40", photos.query).then((response) => {
-                    event.target.scrollTop = event.target.scrollTop - 50;
-                    setPhotos({
-                      ...photos,
-                      pagination: photos.pagination + 1,
-                      list: photos.list.concat(response.photos),
-                      scrollLoading: false,
-                      isLoading: false,
-                    });
+                setTimeout(async () => {
+                  const response = await fetchPhotos(photos.pagination + 1, "20", photos.query);
+                  event.target.scrollTop = event.target.scrollTop - 50;
+                  setPhotos({
+                    ...photos,
+                    pagination: photos.pagination + 1,
+                    list: photos.list.concat(response.photos),
+                    scrollLoading: false,
+                    isLoading: false,
                   });
                 }, 1000);
               }
             }}
           >
-            {photos.list &&
-              photos.list.map((image, index) => {
-                let left = 0;
-                let top = 0;
-                if (index === 1) {
-                  left = 146.5;
-                } else if (index > 1) {
-                  const { width, height } = image;
-                  const imageHeight = Math.floor((141 / Number(width)) * height);
-                  if (leftHeight > rightHeight) {
-                    left = 146.5;
-                    top = rightHeight;
-                    rightHeight += imageHeight + 6;
-                  } else {
-                    top = leftHeight;
-                    leftHeight += imageHeight + 6;
-                  }
-                }
+            <div>
+              {leftPhotos.map((image, index) => {
                 return (
                   <motion.div
-                    animate={{ left, top }}
-                    transition={{ delay: 0 }}
+                    initial={{ y: -index * 100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
                     key={index}
                     draggable
                     onDragEnd={dragEnd}
                     onDragStart={dragStart({ ...imageBlock, config: { ...imageBlock.config, src: image.src.large, alt: image.alt } })}
-                    style={{ left: left - image.width, top: top - image.height }}
-                    className="absolute w-[49%] transition-all photo-item cursor-grab"
+                    className="transition-all photo-item cursor-grab mb-4"
                   >
-                    <div>
-                      <img src={image.src.large} alt={image.alt} className="w-full" />
-                    </div>
+                    <img src={image.src.large} alt={image.alt} className="w-full" />
                   </motion.div>
                 );
               })}
-            {photos.scrollLoading && (
-              <div className="absolute w-full text-center text-slate-400" style={{ top: leftHeight > rightHeight ? leftHeight : rightHeight }}>
-                加载中...
-              </div>
-            )}
-            {photos.isLoading && (
-              <div className="flex-1 flex h-full justify-center items-center">
-                <Spin />
-              </div>
-            )}
+            </div>
+            <div>
+              {rightPhotos.map((image, index) => {
+                return (
+                  <motion.div
+                    initial={{ y: -index * 100, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    key={index}
+                    draggable
+                    onDragEnd={dragEnd}
+                    onDragStart={dragStart({ ...imageBlock, config: { ...imageBlock.config, src: image.src.large, alt: image.alt } })}
+                    className="transition-all photo-item cursor-grab mb-4"
+                  >
+                    <img src={image.src.large} alt={image.alt} className="w-full" />
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
-        </motion.div>
-      </div>
+          {photos.scrollLoading && <div className="absolute -bottom-2 left-0 right-0 w-full text-center text-slate-400">加载中...</div>}
+          {photos.isLoading && (
+            <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-10">
+              <Spin />
+            </div>
+          )}
+        </div>
+      </motion.div>
     );
   };
 
-  const renderSideBar = () => {
+  const SideBarElement = () => {
     return (
       <div className="h-full side-bar flex">
         <div className="side-bar-tabs">
@@ -503,9 +539,13 @@ function Dashboard(props) {
             );
           })}
         </div>
-        {currentSideBarKey === "blocks" && renderBlocks()}
-        {currentSideBarKey === "theme" && renderTheme()}
-        {currentSideBarKey === "photos" && renderPhotos()}
+        <div className="overflow-hidden flex-1">
+          <AnimatePresence mode="wait">
+            {currentSideBarKey === "blocks" && blocksElement()}
+            {currentSideBarKey === "theme" && themeElement()}
+            {currentSideBarKey === "photos" && photosElement()}
+          </AnimatePresence>
+        </div>
       </div>
     );
   };
@@ -514,7 +554,7 @@ function Dashboard(props) {
     <div className="h-full min-w-[1080px] overflow-x-auto">
       <Header blockList={blockList} setBlockList={setBlockList} bodySettings={bodySettings} />
       <div className="h-[calc(100%-_60px)] Dashboard flex justify-between">
-        {renderSideBar()}
+        {SideBarElement()}
         <div className="h-full py-8 px-6" id="preview">
           <div
             className="min-h-full mx-auto border border-dashed transition-all"
@@ -524,6 +564,7 @@ function Dashboard(props) {
               ...bodySettings.styles,
             }}
           >
+            {console.log(blockList, currentItem)}
             {blockList.length ? (
               <>
                 {blockList.map((block, index) => {

@@ -7,6 +7,7 @@ import { faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@forta
 import { defaultColumnsSettings } from "../../utils/defaultColumnsSettings";
 import { setBlockList } from "../../redux/reducerCollection/AuthOptions";
 import { deepClone } from "../../utils/helpers";
+import SocialSettings from "./SocialSettings";
 
 const StyleSettings = (props) => {
   const { blockList, setBlockList, currentItem, setCurrentItem, previewMode } = props;
@@ -863,6 +864,7 @@ const StyleSettings = (props) => {
       {currentItem.data.key === "button" && renderButtonStyles()}
       {currentItem.data.key === "divider" && renderDividerStyles()}
       {currentItem.data.key === "image" && renderImageStyles()}
+      {currentItem.data.key === "social" && <SocialSettings currentItem={currentItem} setCurrentItem={setCurrentItem} previewMode = {previewMode} />}
       <Modal title="删除列" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={400}>
         <p className="my-10">
           您确定删除多余的
@@ -884,4 +886,5 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   setBlockList: (blockList, action) => dispatch(setBlockList(blockList, action)),
 });
+
 export default connect(mapStateToProps, mapDispatchToProps)(StyleSettings);

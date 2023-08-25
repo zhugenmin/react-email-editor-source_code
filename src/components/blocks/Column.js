@@ -8,6 +8,7 @@ import HeadingBlock from "./HeadingBlock";
 import ButtonBlock from "./ButtonBlock";
 import DividerBlock from "./DividerBlock";
 import ImageBlock from "./ImageBlock";
+import SocialLinkBlocks from "./SocialLinkBlocks";
 import { deepClone } from "../../utils/helpers";
 
 const Column = (props) => {
@@ -268,6 +269,16 @@ const Column = (props) => {
                 isDragStart={isDragStart}
                 index={newIndex}
                 blockList={blockList}
+                setBlockList={setBlockList}
+              />
+            )}
+            {block.key === "social" && (
+              <SocialLinkBlocks
+                block={block}
+                blockList={blockList}
+                currentItem={currentItem}
+                isDragStart={isDragStart}
+                index={newIndex}
                 setBlockList={setBlockList}
               />
             )}
