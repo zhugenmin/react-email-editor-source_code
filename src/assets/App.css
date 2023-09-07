@@ -100,23 +100,23 @@ body {
   visibility: visible;
   content: '';
   position: absolute;
-  border: 2px solid var(--block-active-border);
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  transform: translateZ(-1px);
+  outline: 2px solid var(--block-active-border);
+  right: 0px;
+  left: 0px;
+  top: 0%;
+  bottom: 0%;
   opacity: 0;
   z-index: 100;
+  outline-offset: -2px
 }
 
 .hover-visible:hover::after {
-  border: 2px solid var(--block-hover-border);
+  outline: 2px solid var(--block-hover-border);
   opacity: 1;
 }
 
 .block-focus>.hover-visible::after {
-  border: 2px solid var(--block-active-border);
+  outline: 2px solid var(--block-active-border);
   opacity: 1;
 }
 
@@ -182,18 +182,18 @@ body {
   content: '';
   position: absolute;
   width: 100%;
-  height: 49%;
+  bottom: 50%;
   z-index: 104;
-  top: 1%;
+  top: 0;
 }
 
 .block-move-content-bottom::after {
   content: '';
   position: absolute;
   width: 100%;
-  height: 49%;
+  top: 50%;
   z-index: 104;
-  bottom: 1%;
+  bottom: 0;
 }
 
 
@@ -233,13 +233,13 @@ body {
 
 .block-empty-content {
   display: flex;
-  width: 33.33%;
   color: var(--block-empty-content-color);
-  background-color: var(--block-empty-content-background) !important;
-  border: var(--block-empty-content-color) dashed 1px;
+  background-color: var(--block-empty-content-background);
+  outline: var(--block-empty-content-color) dashed 1px;
   justify-content: center;
   align-items: center;
   text-align: center;
+  outline-offset: -1px;
 }
 
 .block-empty-content-tools {
@@ -284,23 +284,22 @@ body {
   visibility: visible;
   content: '';
   position: absolute;
-  border: 2px solid var(--block-active-border);
+  outline: 2px solid var(--block-active-border);
   right: 0px;
   left: 0px;
   top: 0px;
   bottom: 0px;
-  transform: translateZ(-1px);
   opacity: 0;
   z-index: 100;
+  outline-offset: -1.5px;
 }
 
 .block-item-tools:hover::after {
-  border: 2px solid var(--block-hover-border);
-  opacity: 1;
+  opacity: 0.9;
 }
 
 .block-item-focus .block-item-tools::after {
-  border: 2px solid var(--block-active-border);
+  outline: 2px solid var(--block-active-border);
   opacity: 1;
 }
 
@@ -402,7 +401,6 @@ a:hover {
   font-weight: bold;
   background-color: var(--start-content-background);
   color: var(--start-content-font-color) !important;
-  margin: 0 -16px;
 }
 
 .block-style_settings-collapse .ant-collapse-item {
