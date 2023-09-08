@@ -218,7 +218,7 @@ const LeftSideBar = (props) => {
   };
 
   return (
-    <div className="h-full side-bar flex border border-right">
+    <div className="h-full side-bar flex border border-l-0 border-t-0 border-b-0 border-right">
       <div className="side-bar-tabs">
         {sidebarTabsList.map((item) => {
           const { key, icon, name } = item;

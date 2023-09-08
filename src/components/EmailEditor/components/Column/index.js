@@ -87,10 +87,7 @@ const Column = (props) => {
     return (
       <>
         {item.key === "empty" ? (
-          <div
-            className="block-empty-content p-4 h-32 relative w-full"
-            // style={{ ...blockStyles, width: previewMode === "mobile" ? "100%" : item.width }}
-          >
+          <div className="block-empty-content p-4 h-32 relative w-full">
             {isDragStart && currentItem && currentItem.data.key !== "column" && (
               <div className="block-empty-content-tools" onDragOver={preventDefault} data-index={index} data-type="empty-block-item">
                 拖放到此处

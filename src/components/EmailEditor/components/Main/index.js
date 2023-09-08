@@ -84,7 +84,8 @@ const Main = () => {
         case "empty-block-item":
           clearLabelStyles();
           clearContentLabelStyles();
-          event.target.parentNode && (event.target.parentNode.style.backgroundColor = "#ccc");
+          const parentNode = event.target.parentNode;
+          parentNode && parentNode.classList.contains("block-empty-content") && (parentNode.style.outlineStyle = "solid");
           break;
         default:
           clearLabelStyles();
@@ -108,6 +109,7 @@ const Main = () => {
         setCurrentItem({ data: newCurrentItem, type: "edit", index: 0 });
         break;
       case "empty-block-item":
+        clearEmptyContentStyles();
         const { index } = event.target.dataset;
         const newBlockList = deepClone(blockList);
         const indexArr = index.split("-");
@@ -227,9 +229,16 @@ const Main = () => {
     }
   };
 
+  const clearEmptyContentStyles = () => {
+    document.querySelectorAll(".block-empty-content").forEach((item) => {
+      item.style.outlineStyle = "";
+    });
+  };
+
   const clearStyles = () => {
     clearLabelStyles();
     clearContentLabelStyles();
+    clearEmptyContentStyles();
   };
 
   const onDragLeave = (event) =>
@@ -239,8 +248,9 @@ const Main = () => {
           event.target.style.border = "";
           break;
         case "empty-block-item":
-          event.target.parentNode && (event.target.parentNode.style.backgroundColor = "");
+          event.target.parentNode && (event.target.parentNode.style.outlineStyle = "");
           break;
+        case "drag-over-column":
         default:
           break;
       }

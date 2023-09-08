@@ -1,7 +1,8 @@
 import EmailEditor from "../../components/EmailEditor";
-import { useCallback, useRef } from "react";
+import { useRef, useState } from "react";
 import defaultBlockList from "./defaultBlockList.json";
 import Header from "./Header";
+import { useEffect } from "react";
 // TODO:
 // 1.拷贝功能
 // 2.图片block可以选择pexels的图片
@@ -11,12 +12,18 @@ import Header from "./Header";
 
 function Dashboard() {
   const emailEditorRef = useRef(null);
+  const [emailData, setEmailData] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setEmailData(defaultBlockList);
+    }, 300);
+  }, []);
+
   return (
     <div className="flex flex-col h-full">
       <Header emailEditorEl={emailEditorRef} />
-      <div className="flex-1 overflow-auto">
-        <EmailEditor ref={emailEditorRef} defaultBlockList={defaultBlockList} />
-      </div>
+      <div className="flex-1 overflow-auto">{emailData && <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} />}</div>
     </div>
   );
 }

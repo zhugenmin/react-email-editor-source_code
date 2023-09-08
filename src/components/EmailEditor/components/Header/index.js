@@ -17,7 +17,7 @@ const Header = () => {
   });
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const { histories, index } = blockListHistory;
-  console.log("histories", histories, blockList);
+ 
   useEffect(() => {
     //第一次渲染不添加
     const newBlockList = deepClone(blockList);
