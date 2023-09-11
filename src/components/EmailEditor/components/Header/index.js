@@ -17,7 +17,7 @@ const Header = () => {
   });
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const { histories, index } = blockListHistory;
- 
+
   useEffect(() => {
     //第一次渲染不添加
     const newBlockList = deepClone(blockList);
@@ -76,54 +76,54 @@ const Header = () => {
 
   return (
     <>
-      <div className="flex items-center justify-between px-10 bg-white border py-4">
-        <div className="w-1/3">
+      <div className="header">
+        <div className="header-box">
           <FontAwesomeIcon
             icon={faEye}
             onClick={openModal}
             className={classNames(
-              "mr-8 text-xl cursor-pointer hover:text-black",
-              isPreviewModalOpen === "desktop" && "text-black",
-              isPreviewModalOpen !== "desktop" && "text-gray-500"
+              "header-icon-small",
+              isPreviewModalOpen === "desktop" && "header-icon_active",
+              isPreviewModalOpen !== "desktop" && "header-icon_disabled"
             )}
           />
           <FontAwesomeIcon
             onClick={() => setPreviewMode("desktop")}
             icon={faDesktop}
             className={classNames(
-              "mr-8 text-xl cursor-pointer hover:text-black",
-              previewMode === "desktop" && "text-black",
-              previewMode !== "desktop" && "text-gray-500"
+              "header-icon-small",
+              previewMode === "desktop" && "header-icon_active",
+              previewMode !== "desktop" && "header-icon_disabled"
             )}
           />
           <FontAwesomeIcon
             icon={faMobileAlt}
             onClick={() => setPreviewMode("mobile")}
             className={classNames(
-              "mr-8 text-xl cursor-pointer hover:text-black",
-              previewMode === "mobile" && "text-black",
-              previewMode !== "mobile" && "text-gray-500"
+              "header-icon-small",
+              previewMode === "mobile" && "header-icon_active",
+              previewMode !== "mobile" && "header-icon_disabled"
             )}
           />
         </div>
-        <div className="w-1/3 text-center"></div>
-        <div className="w-1/3 text-right">
+        <div className="header-box text-center"></div>
+        <div className="header-box text-right">
           <FontAwesomeIcon
             onClick={prevHistory}
             icon={faUndo}
             className={classNames(
-              "mr-8 text-xl",
-              histories[index - 1] && "text-black hover:text-black cursor-pointer",
-              !histories[index - 1] && "text-gray-500 cursor-not-allowed"
+              "header-icon-history",
+              histories[index - 1] && "header-icon-history_active",
+              !histories[index - 1] && "header-icon-history_disabled"
             )}
           />
           <FontAwesomeIcon
             onClick={nextHistory}
             icon={faRedo}
             className={classNames(
-              "text-xl",
-              histories[index + 1] && "text-black hover:text-black cursor-pointer",
-              !histories[index + 1] && "text-gray-500 cursor-not-allowed"
+              "header-icon-history",
+              histories[index + 1] && "header-icon-history_active",
+              !histories[index + 1] && "header-icon-history_disabled"
             )}
           />
         </div>
@@ -132,8 +132,8 @@ const Header = () => {
       <Drawer
         title={
           <div className="flex justify-between">
-            <div className="w-1/3 text-center"></div>
-            <div className="w-1/3 text-center">
+            <div className="header-box text-center"></div>
+            <div className="header-box text-center">
               <FontAwesomeIcon
                 onClick={() => {
                   setModalPreview("desktop");
@@ -141,9 +141,9 @@ const Header = () => {
                 }}
                 icon={faDesktop}
                 className={classNames(
-                  "mr-8 text-2xl cursor-pointer hover:text-black",
-                  modalPreview === "desktop" && "text-black",
-                  modalPreview !== "desktop" && "text-gray-500"
+                  "header-icon",
+                  modalPreview === "desktop" && "header-icon_active",
+                  modalPreview !== "desktop" && "header-icon_disabled"
                 )}
               />
               <FontAwesomeIcon
@@ -152,9 +152,9 @@ const Header = () => {
                   setModalPreview("tablet");
                 }}
                 className={classNames(
-                  "mr-8 text-2xl cursor-pointer hover:text-black",
-                  modalPreview === "tablet" && "text-black",
-                  modalPreview !== "tablet" && "text-gray-500"
+                  "header-icon",
+                  modalPreview === "tablet" && "header-icon_active",
+                  modalPreview !== "tablet" && "header-icon_disabled"
                 )}
               />
               <FontAwesomeIcon
@@ -164,17 +164,14 @@ const Header = () => {
                   setPreviewMode("mobile");
                 }}
                 className={classNames(
-                  "mr-8 text-2xl cursor-pointer hover:text-black",
-                  modalPreview === "mobile" && "text-black",
-                  modalPreview !== "mobile" && "text-gray-500"
+                  "header-icon",
+                  modalPreview === "mobile" && "header-icon_active",
+                  modalPreview !== "mobile" && "header-icon_disabled"
                 )}
               />
             </div>
-            <div className="w-1/3 text-right">
-              <div
-                onClick={closeModal}
-                className="inline-flex justify-center items-center rounded-full bg-gray-500 hover:bg-gray-600 cursor-pointer text-white p-1 h-8 w-8"
-              >
+            <div className="header-box text-right">
+              <div onClick={closeModal} className="header-drawer-close">
                 <FontAwesomeIcon icon={faTimes} className="text-sm" />
               </div>
             </div>
@@ -195,22 +192,22 @@ const Header = () => {
         cont
       >
         <div
-          className="border rounded-lg transition-all mx-auto h-full"
+          className="header-drawer-body"
           style={{
             width: (modalPreview === "desktop" && "100%") || (modalPreview === "tablet" && 768) || (modalPreview === "mobile" && 364),
           }}
         >
-          <div className="bg-gray-100 flex border-b p-4">
-            <div className="h-4 w-4 rounded-full bg-red-600 mr-2"></div>
-            <div className="h-4 w-4 rounded-full bg-yellow-400 mr-2"></div>
-            <div className="h-4 w-4 rounded-full bg-green-600 mr-2"></div>
+          <div className="header-drawer-head">
+            <div className="header-drawer-head-item"></div>
+            <div className="header-drawer-head-item"></div>
+            <div className="header-drawer-head-item"></div>
           </div>
-          <div className="w-full h-[calc(100%-40px)]">
+          <div className="header-drawer-content">
             <iframe
               src={"data:text/html," + encodeURIComponent(dataToHtml({ bodySettings, blockList }))}
               title="preview"
               scrolling="no"
-              className="w-full h-full"
+              className="header-drawer-iframe"
             ></iframe>
           </div>
         </div>

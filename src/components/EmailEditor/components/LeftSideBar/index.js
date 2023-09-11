@@ -74,27 +74,27 @@ const LeftSideBar = (props) => {
   const blocksElement = () => {
     return (
       <motion.div
-        className="flex-1 h-full overflow-hidden"
+        className="side-bar-blocks"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ duration: 0.3 }}
         key="blocks"
       >
-        <div className="p-4 flex flex-wrap content-start">
+        <div className="side-bar-blocks-container">
           {blockConfigsList.map((item) => {
             return (
               <div
-                className="relative w-1/3 h-32 mb-4"
+                className="side-bar-blocks-item"
                 data-block_type="header"
                 draggable="true"
                 key={item.key}
                 onDragEnd={dragEnd}
                 onDragStart={dragStart(item)}
               >
-                <div className="sidebar-block h-full bg-white flex items-center justify-center rounded-2xl mx-1.5 flex-col">
-                  <FontAwesomeIcon icon={icons[item.key]} className="text-3xl mb-3" />
-                  <div className="text-lg">{item.name}</div>
+                <div className="sidebar-block">
+                  <FontAwesomeIcon icon={icons[item.key]} className="sidebar-block-icon" />
+                  <div className="sidebar-block-text">{item.name}</div>
                 </div>
               </div>
             );
@@ -136,22 +136,22 @@ const LeftSideBar = (props) => {
 
     return (
       <motion.div
-        className="flex-1 h-full p-6 overflow-hidden"
+        className="photo-container"
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 10 }}
         transition={{ duration: 0.3 }}
         key="photos"
       >
-        <div className="mb-4">
+        <div className="margin-bottom-12">
           <Input.Search onSearch={searchPhotos} loading={photos.isLoading || photos.scrollLoading} />
-          <a href="https://www.pexels.com" rel="noreferrer" target="_blank" className="text-slate-400 text-sm hover:text-slate-400">
+          <a href="https://www.pexels.com" rel="noreferrer" target="_blank" className="pexels-link">
             由Pexels提供技术支持
           </a>
         </div>
-        <div className="relative h-[calc(100%-58px)]">
+        <div className="photos-body">
           <div
-            className="photos-container grid grid-cols-2 gap-2 overflow-auto h-full default-scrollbar pr-6"
+            className="photos-container default-scrollbar"
             style={{ overflowAnchor: "none" }}
             onScroll={(event) => {
               let scrollBottom = event.target.scrollHeight - event.target.offsetHeight - event.target.scrollTop;
@@ -181,9 +181,9 @@ const LeftSideBar = (props) => {
                     draggable
                     onDragEnd={dragEnd}
                     onDragStart={dragStart({ ...imageBlock, src: image.src.large, alt: image.alt })}
-                    className="transition-all photo-item cursor-grab mb-2"
+                    className="photo-item"
                   >
-                    <img src={image.src.large} alt={image.alt} className="w-full" />
+                    <img src={image.src.large} alt={image.alt} className="width-full" />
                   </motion.div>
                 );
               })}
@@ -198,17 +198,17 @@ const LeftSideBar = (props) => {
                     draggable
                     onDragEnd={dragEnd}
                     onDragStart={dragStart({ ...imageBlock, src: image.src.large, alt: image.alt })}
-                    className="transition-all photo-item cursor-grab mb-2"
+                    className="photo-item"
                   >
-                    <img src={image.src.large} alt={image.alt} className="w-full" />
+                    <img src={image.src.large} alt={image.alt} className="width-full" />
                   </motion.div>
                 );
               })}
             </div>
           </div>
-          {photos.scrollLoading && <div className="absolute -bottom-2 left-0 right-0 w-full text-center text-slate-400">加载中...</div>}
+          {photos.scrollLoading && <div className="scroll-loading-context">加载中...</div>}
           {photos.isLoading && (
-            <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center z-10">
+            <div className="loading-spinner">
               <Spin />
             </div>
           )}
@@ -218,7 +218,7 @@ const LeftSideBar = (props) => {
   };
 
   return (
-    <div className="h-full side-bar flex border border-l-0 border-t-0 border-b-0 border-right">
+    <div className="side-bar">
       <div className="side-bar-tabs">
         {sidebarTabsList.map((item) => {
           const { key, icon, name } = item;
@@ -230,19 +230,16 @@ const LeftSideBar = (props) => {
                   setPhotos({ list: null, pagination: 1, isLoading: true, scrollLoading: false, query: "" });
                 }
               }}
-              className={classNames(
-                currentSideBarKey === key ? "side-bar-tab-item-active" : "side-bar-tab-item",
-                "px-6 py-4 cursor-pointer text-center select-none transition-all"
-              )}
+              className={classNames(currentSideBarKey === key ? "side-bar-tab-item-active" : "side-bar-tab-item", "side-bar-item-default")}
               key={key}
             >
-              <FontAwesomeIcon icon={icon} className="text-2xl" />
-              <div className="mt-1 font-semibold">{name}</div>
+              <FontAwesomeIcon icon={icon} className="text-18" />
+              <div className="side-bar-icon-title">{name}</div>
             </div>
           );
         })}
       </div>
-      <div className="overflow-hidden flex-1">
+      <div className="side-bar-content">
         <AnimatePresence mode="wait">
           {currentSideBarKey === "blocks" && blocksElement()}
           {currentSideBarKey === "photos" && photosElement()}

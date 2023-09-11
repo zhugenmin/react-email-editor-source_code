@@ -117,9 +117,9 @@ const RichText = ({ index, textBlock, styles }) => {
           <span className="richText-select-value" id={`richText-select-value-${type}-${index}`}>
             {defaultValue}
           </span>
-          <FontAwesomeIcon icon={faAngleDown} className="ml-2" />
+          <FontAwesomeIcon icon={faAngleDown} className="richText-select-icon" />
         </div>
-        <div className="fixed w-screen hidden h-screen top-0 left-0 z-[1070]" id={`richText-mask-${type}-${index}`} onClick={hideOptions}></div>
+        <div className="richText-mask" id={`richText-mask-${type}-${index}`} onClick={hideOptions}></div>
         <div className="richText-select-option z-[1071]" id={`richText-options-${type}-${index}`}>
           {selectList.map((item) => {
             return (
@@ -160,7 +160,7 @@ const RichText = ({ index, textBlock, styles }) => {
 
   return (
     <div
-      className="absolute z-[1060]"
+      className="rich-text"
       ref={richTextRef}
       onClick={(event) => {
         event.preventDefault();

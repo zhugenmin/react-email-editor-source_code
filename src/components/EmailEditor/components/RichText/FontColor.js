@@ -29,8 +29,8 @@ const FontColor = ({ modifyText, setTextContent }) => {
       open={open}
       onOpenChange={handleOpenChange}
     >
-      <button className="rounded-sm border p-1">
-        <div className="rounded-sm h-3 w-12" style={{ background: color }}></div>
+      <button className="rich_text-font_color">
+        <div className="rich_text-font_color-content" style={{ background: color }}></div>
       </button>
     </Popover>
   );

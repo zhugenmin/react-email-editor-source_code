@@ -6,7 +6,7 @@ const PaddingSettings = ({ padding, setPadding }) => {
     setPadding(newPadding);
   };
   return (
-    <div className="my-4 grid grid-cols-2 gap-8">
+    <div className="padding-settings">
       {[
         { name: "上", value: "paddingTop" },
         { name: "右", value: "paddingRight" },
@@ -17,7 +17,7 @@ const PaddingSettings = ({ padding, setPadding }) => {
         return (
           <div key={value}>
             <div>{name}</div>
-            <InputNumber className="w-full" addonAfter="px" min={0} value={style} onChange={paddingChange(value)} />
+            <InputNumber className="width-full" addonAfter="px" min={0} value={style} onChange={paddingChange(value)} />
           </div>
         );
       })}

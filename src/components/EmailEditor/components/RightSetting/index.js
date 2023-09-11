@@ -4,10 +4,11 @@ import ColorPicker from "../ColorPicker";
 import { GlobalContext } from "../../reducers";
 import { InputNumber, Input } from "antd";
 import StyleSettings from "../StyleSettings";
+import useLayout from "../../utils/useStyleLayout";
 
 const RightSetting = () => {
   const { currentItem, isDragStart, bodySettings, setBodySettings } = useContext(GlobalContext);
-
+  const { cardItemElement } = useLayout();
   const blockTitle = () => {
     let title = "Block";
     const type = currentItem?.data.key;
@@ -39,15 +40,6 @@ const RightSetting = () => {
     return title;
   };
 
-  const cardItemElement = (title, dom) => {
-    return (
-      <div className="flex items-center justify-between mb-4">
-        <div className="text-slate-400 font-semibold">{title}</div>
-        <div>{dom}</div>
-      </div>
-    );
-  };
-
   const colorChange = (key) => (color) => {
     setBodySettings({ ...bodySettings, styles: { ...bodySettings.styles, [key]: color.hex } }, "set_body_settings");
   };
@@ -55,7 +47,7 @@ const RightSetting = () => {
   const themeElement = () => {
     return (
       <>
-        <div className="text-xl font-semibold mb-10">邮件主题设置</div>
+        <div className="subject-settings">邮件主题设置</div>
         {cardItemElement("字体颜色", <ColorPicker color={bodySettings.styles.color} setColor={colorChange("color")} />)}
         {cardItemElement("邮件背景颜色", <ColorPicker color={bodySettings.styles.backgroundColor} setColor={colorChange("backgroundColor")} />)}
 
@@ -63,7 +55,7 @@ const RightSetting = () => {
           {cardItemElement(
             "行高",
             <InputNumber
-              className="w-32"
+              className="input-width"
               addonAfter="px"
               min={0}
               max={900}
@@ -73,13 +65,13 @@ const RightSetting = () => {
           )}
         </div>
         <div>
-          <div className="text-slate-400 font-semibold">标题文本</div>
+          <div className="pre_header">标题文本</div>
           <Input
-            className="mt-4"
+            className="margin-top-12"
             value={bodySettings.preHeader}
             onChange={(event) => setBodySettings({ ...bodySettings, preHeader: event.target.value }, "set_body_settings")}
           />
-          <div className="text-gray-400 text-sm mt-2">标题是从收件箱查看电子邮件时跟随在主题行之后的简短摘要文本。</div>
+          <div className="pre_header-desc">标题是从收件箱查看电子邮件时跟随在主题行之后的简短摘要文本。</div>
         </div>
       </>
     );
@@ -90,7 +82,7 @@ const RightSetting = () => {
   };
 
   return (
-    <div className="w-[300px] h-full overflow-auto py-12 px-8 default-scrollbar border-left border" onClick={stopPropagation}>
+    <div className="right-settings default-scrollbar" onClick={stopPropagation}>
       <AnimatePresence mode="wait">
         {!isDragStart && currentItem && currentItem.type === "edit" ? (
           <motion.div
@@ -100,8 +92,8 @@ const RightSetting = () => {
             transition={{ duration: 0.3 }}
             key={0}
           >
-            <h2 className="pl-2 text-[16px] leading-[16px] text-[#5E6875] font-semibold border-l-4 border-blue-500">{blockTitle()}</h2>
-            <div className="mt-6">
+            <h2 className="right-setting-block-title">{blockTitle()}</h2>
+            <div className="margin-top-18">
               <StyleSettings />
             </div>
           </motion.div>

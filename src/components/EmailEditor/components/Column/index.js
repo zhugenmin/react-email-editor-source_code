@@ -87,7 +87,7 @@ const Column = (props) => {
     return (
       <>
         {item.key === "empty" ? (
-          <div className="block-empty-content p-4 h-32 relative w-full">
+          <div className="block-empty-content p-4 h-32 relative width-full">
             {isDragStart && currentItem && currentItem.data.key !== "column" && (
               <div className="block-empty-content-tools" onDragOver={preventDefault} data-index={index} data-type="empty-block-item">
                 拖放到此处
@@ -191,7 +191,7 @@ const Column = (props) => {
             </span>
           </div>
 
-          <div className="w-full h-full absolute" onDragOver={preventDefault}>
+          <div className="width-full height-full absolute" onDragOver={preventDefault}>
             {isDragStart && currentItem.data.key === "column" && (
               <>
                 <div
@@ -211,12 +211,8 @@ const Column = (props) => {
               </>
             )}
           </div>
-          <div className="column m-auto" style={{ ...newStyles, maxWidth: "100%" }}>
-            <div
-              className="text-blue-500 h-full flex mx-auto flex-wrap max-w-full"
-              style={{ background: contentBackground, width: bodySettings.contentWidth }}
-              data-index={blockIndex}
-            >
+          <div className="column margin-auto" style={{ ...newStyles, maxWidth: "100%" }}>
+            <div className="block-content" style={{ background: contentBackground, width: bodySettings.contentWidth }} data-index={blockIndex}>
               {block.children.map((content, index) => {
                 let contentStyles = previewMode === "desktop" ? content.styles.desktop : { ...content.styles.desktop, ...content.styles.mobile };
                 return (

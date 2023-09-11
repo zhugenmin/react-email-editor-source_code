@@ -35,7 +35,7 @@ const Link = ({ modifyText, setTextContent }) => {
     }
 
     // 给选中文本添加<link>标签
-
+    setTextContent();
     closeModal();
   };
 

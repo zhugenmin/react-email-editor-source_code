@@ -23,10 +23,10 @@ const ButtonStyleSettings = () => {
 
     return (
       <div>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100">点击按钮触发</div>
-        {cardItemElement("按钮类型", <div className="text-center text-sky-500 border-sky-500 border px-2 py-1 rounded-lg font-semibold">超链接</div>)}
-        <div className="text-slate-400 font-semibold">超链接URL</div>
-        <div className="mt-2">
+        <div className="right-setting-block-item-title">点击按钮触发</div>
+        {cardItemElement("按钮类型", <div className="link-tag">超链接</div>)}
+        <div className="card-item-title">超链接URL</div>
+        <div className="margin-top-6">
           <Input addonBefore="https://" value={linkURL} onChange={linkChange} />
         </div>
       </div>
@@ -45,7 +45,7 @@ const ButtonStyleSettings = () => {
 
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 内边距设置</div>
+        <div className="right-setting-block-item-title"> 内边距设置</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),
@@ -70,12 +70,12 @@ const ButtonStyleSettings = () => {
 
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100">按钮样式</div>
+        <div className="right-setting-block-item-title">按钮样式</div>
         {cardItemElement(
           "宽度自适应",
           <Switch
             checked={width === "auto"}
-            className={classNames(width === "auto" ? "bg-sky-500" : "bg-gray-400")}
+            className={classNames(width === "auto" ? "switch-active" : "switch-disabled")}
             onChange={() => {
               const value = width === "auto" ? "100%" : "auto";
               inputChange("width")(value);
@@ -87,7 +87,7 @@ const ButtonStyleSettings = () => {
         {cardItemElement("按钮颜色", <ColorPicker color={backgroundColor} setColor={colorChange("backgroundColor")} />)}
         {cardItemElement(
           "字体大小",
-          <Select className="w-32" value={fontFamily} onChange={inputChange("fontFamily")}>
+          <Select className="input-width" value={fontFamily} onChange={inputChange("fontFamily")}>
             {fontFamilyList.map((item) => (
               <Select.Option key={item} value={item}>
                 {item}
@@ -95,18 +95,18 @@ const ButtonStyleSettings = () => {
             ))}
           </Select>
         )}
-        {cardItemElement("字体大小", <InputNumber min={0} className="w-32" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />)}
+        {cardItemElement("字体大小", <InputNumber min={0} className="input-width" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />)}
         {cardItemElement(
           "行高",
           <InputNumber
-            className="w-32"
+            className="input-width"
             addonAfter="%"
             min={0}
             value={Number(lineHeight.replace("%", ""))}
             onChange={(value) => inputChange("lineHeight")(value + "%")}
           />
         )}
-        <div className="text-slate-400 font-semibold">按钮内边距</div>
+        <div className="card-item-title">按钮内边距</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),
@@ -120,7 +120,7 @@ const ButtonStyleSettings = () => {
     );
   };
   return (
-    <div className="my-10">
+    <div className="margin-y-30">
       {buttonActionElement()}
       {textStylesElement()}
       {PaddingStylesElement()}

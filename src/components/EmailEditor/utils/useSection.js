@@ -1,9 +1,6 @@
-import { useCallback, useContext, useMemo } from "react";
-import { GlobalContext } from "../reducers";
-import { deepClone } from "./helpers";
+import { useCallback } from "react";
 
 const useSection = () => {
-  const { selectionRange } = useContext(GlobalContext);
   const getSelectionNode = (node, tagName) => {
     if (!node) return null;
     if (node.classList?.contains("text-content_editable")) return null;

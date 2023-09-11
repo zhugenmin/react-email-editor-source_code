@@ -25,10 +25,10 @@ const ImageStyleSettings = () => {
 
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100">点击图片触发</div>
-        {cardItemElement("按钮类型", <div className="text-center text-sky-500 border-sky-500 border px-2 py-1 rounded-lg font-semibold">超链接</div>)}
-        <div className="text-slate-400 font-semibold">超链接URL</div>
-        <div className="mt-2">
+        <div className="right-setting-block-item-title">点击图片触发</div>
+        {cardItemElement("按钮类型", <div className="link-tag">超链接</div>)}
+        <div className="card-item-title">超链接URL</div>
+        <div className="margin-top-6">
           <Input addonBefore="https://" value={linkURL} onChange={linkChange} />
         </div>
       </>
@@ -46,12 +46,12 @@ const ImageStyleSettings = () => {
 
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100">图片链接</div>
-        <div className="text-slate-400 font-semibold">图片URL</div>
+        <div className="right-setting-block-item-title">图片链接</div>
+        <div className="card-item-title">图片URL</div>
         <div className="my-2">
           <Input value={src} onChange={linkChange("src")} />
         </div>
-        <div className="text-slate-400 font-semibold">图片alt</div>
+        <div className="card-item-title">图片alt</div>
         <div className="my-2">
           <Input value={alt} onChange={linkChange("alt")} />
         </div>
@@ -82,7 +82,7 @@ const ImageStyleSettings = () => {
     const textAlign = findStyleItem(currentItem.data.contentStyles, "textAlign");
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100">图片样式设置</div>
+        <div className="right-setting-block-item-title">图片样式设置</div>
         {cardItemElement(
           "宽度自适应",
           <Switch
@@ -107,19 +107,16 @@ const ImageStyleSettings = () => {
               return (
                 <div
                   key={value}
-                  className={classNames(
-                    textAlign === value ? "border-gray-500 text-gray-500" : "border-gray-200 text-gray-200 hover:border-gray-500 hover:text-gray-500",
-                    "rounded-md w-10 h-10 border text-center ml-2 cursor-pointer transition-all font-bold select-none"
-                  )}
+                  className={classNames(textAlign === value ? "align-style-item-active" : "align-style-item-un_active", "align-style-item")}
                   onClick={() => updateContentTextAlign(value)}
                 >
-                  <FontAwesomeIcon icon={icon} className="h-10 w-10" />
+                  <FontAwesomeIcon icon={icon} className="tag-style-size" />
                 </div>
               );
             })}
           </div>
         )}
-        <div className="text-slate-400 font-semibold"> 内边距设置</div>
+        <div className="card-item-title"> 内边距设置</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),
@@ -133,7 +130,7 @@ const ImageStyleSettings = () => {
     );
   };
   return (
-    <div className="my-10">
+    <div className="margin-y-30">
       {actionSettings()}
       {imageSettings()}
       {imageStyleSettings()}

@@ -97,20 +97,6 @@ const SocialLinkSettings = () => {
     [sourceNode, dragIndex]
   );
 
-  const move = useCallback(
-    (container) => {
-      for (let i = 0, len = container.children.length; i < len; i++) {
-        const dom = container.children[i];
-        const rect = dom.getBoundingClientRect();
-        const curY = rect.top;
-        dom.animate([{ transform: `translateY(${dom.startY - curY}px)` }, { transform: `translateY(0px)` }], {
-          duration: 100,
-        });
-      }
-    },
-    [sourceNode, dragIndex]
-  );
-
   const contentPaddingChange = (padding) => {
     const newData = deepClone(currentItem.data);
     newData.contentStyles[previewMode] = {
@@ -138,7 +124,7 @@ const SocialLinkSettings = () => {
   const PaddingStylesElement = () => {
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 内边距设置</div>
+        <div className="right-setting-block-item-title"> 内边距设置</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),
@@ -157,7 +143,7 @@ const SocialLinkSettings = () => {
     const width = currentItem.data.imageWidth;
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 社交链接设置</div>
+        <div className="right-setting-block-item-title"> 社交链接设置</div>
         {cardItemElement(
           "对齐方式",
           <div className="flex justify-center items-center">
@@ -170,24 +156,21 @@ const SocialLinkSettings = () => {
               return (
                 <div
                   key={value}
-                  className={classNames(
-                    textAlign === value ? "border-gray-500 text-gray-500" : "border-gray-200 text-gray-200 hover:border-gray-500 hover:text-gray-500",
-                    "rounded-md w-10 h-10 border text-center ml-2 cursor-pointer transition-all font-bold select-none"
-                  )}
+                  className={classNames(textAlign === value ? "align-style-item-active" : "align-style-item-un_active", "align-style-item")}
                   onClick={() => updateContentTextAlign(value)}
                 >
-                  <FontAwesomeIcon icon={icon} className="h-10 w-10" />
+                  <FontAwesomeIcon icon={icon} className="tag-style-size" />
                 </div>
               );
             })}
           </div>
         )}
-        {cardItemElement("链接大小", <InputNumber min={0} className="w-32" addonAfter="px" value={width} onChange={imageWidthChange} />)}
-        <div className="text-slate-400 font-semibold mt-6">修改社交链接</div>
+        {cardItemElement("链接大小", <InputNumber min={0} className="input-width" addonAfter="px" value={width} onChange={imageWidthChange} />)}
+        <div className="card-item-title margin-top-18">修改社交链接</div>
         <div
           ref={socialLists}
           onDragOver={dragOver}
-          className="mt-4"
+          className="margin-top-12"
           onDragStart={(event) => {
             setSourceNode(event.target);
             setIsDragStart(true);
@@ -195,7 +178,7 @@ const SocialLinkSettings = () => {
             setCurrentEditIndex(null);
           }}
           onDragEnd={() => {
-            sourceNode.childNodes[0].classList.remove("border", "opacity-40", "border-dashed", "border-black");
+            sourceNode.childNodes[0].classList.remove("social-link-item-current");
             setSourceNode(null);
             setIsDragStart(false);
             setDragIndex(null);
@@ -209,77 +192,69 @@ const SocialLinkSettings = () => {
                 data-index={index}
                 draggable
                 className={classNames(
-                  "mb-4 relative border",
+                  "social-link-item",
                   currentEditIndex === index ? "cursor-default" : "cursor-grab",
-                  isDragStart && "after:absolute after:top-0 after:left-0 after:right-0 after:bottom-0 after:z-40",
-                  dragIndex === index ? "opacity-40 border-dashed border-black" : "border-transparent"
+                  isDragStart && "social-link-item-drag_start",
+                  dragIndex === index ? "social-link-item-current" : "border-transparent"
                 )}
               >
-                <div>
-                  <div className="shadow shadow-[rgba(45,100,188,0.2)] hover:shadow-[0_3px_12px_0_rgba(45,100,188,0.2)] p-4 rounded-xl select-none">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center">
-                        <img src={image} alt={title} className="w-9 mr-2" />
-                        <div className="font-semibold">{title}</div>
-                      </div>
-                      <div className="flex items-center">
-                        {currentEditIndex !== index && (
-                          <div
-                            className="transition-all p-2 rounded-full mr-2 cursor-pointer focus-within:cursor-grabbing hover:bg-slate-100 w-10 h-10 flex justify-center items-center"
-                            onClick={() => setCurrentEditIndex(index)}
-                          >
-                            <FontAwesomeIcon icon={faPen} className="text-[#66788a] text-lg" />
-                          </div>
-                        )}
-                        {currentEditIndex === index && (
-                          <div
-                            className="transition-all p-2 rounded-full mr-2 cursor-pointer focus-within:cursor-grabbing hover:bg-red-100 w-10 h-10 flex justify-center items-center"
-                            onClick={() => setCurrentEditIndex(null)}
-                          >
-                            <FontAwesomeIcon icon={faTimes} className="text-red-500 text-lg" />
-                          </div>
-                        )}
-                        <div
-                          className="transition-all p-2 rounded-full mr-2 cursor-pointer hover:bg-slate-100 w-10 h-10 flex justify-center items-center z-10"
-                          onClick={() => {
-                            updateSocialSettings(
-                              "list",
-                              list.filter((item, idx) => idx !== index)
-                            );
-                          }}
-                        >
-                          <FontAwesomeIcon icon={faTrash} className="text-[#66788a] text-lg" />
+                <div className="social-link-item-content">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <img src={image} alt={title} className="social-link-item-img" />
+                      <div className="font-semibold">{title}</div>
+                    </div>
+                    <div className="flex items-center">
+                      {currentEditIndex !== index && (
+                        <div className="social-link-item-icon social-link-item-icon-slate" onClick={() => setCurrentEditIndex(index)}>
+                          <FontAwesomeIcon icon={faPen} className="social-link-item-icon-svg social-link-item-icon-svg-deep" />
                         </div>
+                      )}
+                      {currentEditIndex === index && (
+                        <div className="social-link-item-icon social-link-item-icon-red" onClick={() => setCurrentEditIndex(null)}>
+                          <FontAwesomeIcon icon={faTimes} className="social-link-item-icon-svg social-link-item-icon-svg-red" />
+                        </div>
+                      )}
+                      <div
+                        className="social-link-item-icon social-link-item-icon-slate"
+                        onClick={() => {
+                          updateSocialSettings(
+                            "list",
+                            list.filter((item, idx) => idx !== index)
+                          );
+                        }}
+                      >
+                        <FontAwesomeIcon icon={faTrash} className="social-link-item-icon-svg social-link-item-icon-svg-deep" />
                       </div>
                     </div>
-                    {currentEditIndex === index && (
-                      <div className="mt-4 z-10 relative">
-                        <Input
-                          addonBefore="https://"
-                          value={link}
-                          onInput={(value) =>
-                            updateSocialSettings(
-                              "list",
-                              list.map((item, idx) => {
-                                if (idx === index) {
-                                  return { ...item, link: value.target.value };
-                                } else {
-                                  return item;
-                                }
-                              })
-                            )
-                          }
-                        />
-                      </div>
-                    )}
                   </div>
+                  {currentEditIndex === index && (
+                    <div className="margin-top-12 relative">
+                      <Input
+                        addonBefore="https://"
+                        value={link}
+                        onInput={(value) =>
+                          updateSocialSettings(
+                            "list",
+                            list.map((item, idx) => {
+                              if (idx === index) {
+                                return { ...item, link: value.target.value };
+                              } else {
+                                return item;
+                              }
+                            })
+                          )
+                        }
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             );
           })}
         </div>
-        <div className="text-slate-400 font-semibold mt-6">添加社交链接</div>
-        <div className="flex flex-wrap gap-4 mt-4">
+        <div className="card-item-title margin-top-18">添加社交链接</div>
+        <div className="social-link-add margin-top-12">
           {socialList.map((item, index) => {
             const { image, title } = item;
             return (
@@ -287,13 +262,13 @@ const SocialLinkSettings = () => {
                 src={image}
                 key={index}
                 alt={title}
-                className="w-10 rounded-full cursor-pointer"
+                className="social-link-add-img"
                 onClick={() => updateSocialSettings("list", list.concat(item))}
               />
             );
           })}
         </div>
-        <div className="text-slate-400 font-semibold mt-6"> 间距</div>
+        <div className="card-item-title margin-top-18"> 间距</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),
@@ -308,7 +283,7 @@ const SocialLinkSettings = () => {
   };
 
   return (
-    <div className="my-10">
+    <div className="margin-y-30">
       {socialLinkLayoutElement()}
       {PaddingStylesElement()}
     </div>

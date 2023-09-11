@@ -4,15 +4,7 @@ import { faAlignLeft, faAlignCenter, faAlignRight } from "@fortawesome/free-soli
 import useSection from "../../utils/useSection";
 import classNames from "../../utils/classNames";
 import { GlobalContext } from "../../reducers";
-const fontStyleList = [
-  // { title: "超链接", icon: faLink, key: "createLink" },
-  // { title: "删除超链接", icon: faUnlink, key: "unlink" },
-  // { title: "居中", icon: faAlignLeft, key: "justifyLeft" },
-  // { title: "居左", icon: faAlignCenter, key: "justifyCenter" },
-  // { title: "居右", icon: faAlignRight, key: "justifyRight" },
-  // { title: "上标", icon: faSuperscript, key: "superscript" },
-  // { title: "下标", icon: faSubscript, key: "subscript" },
-];
+
 const TextAlign = ({ modifyText, setTextContent }) => {
   const { selectionRange, blockList } = useContext(GlobalContext);
   const { getSectionStyle } = useSection();

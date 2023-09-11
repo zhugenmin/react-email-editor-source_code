@@ -16,7 +16,7 @@ const TextStyleSettings = () => {
   const PaddingStylesElement = () => {
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 内边距设置</div>
+        <div className="right-setting-block-item-title"> 内边距设置</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),
@@ -40,7 +40,7 @@ const TextStyleSettings = () => {
 
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100">文本样式</div>
+        <div className="right-setting-block-item-title">文本样式</div>
         {cardItemElement("字体颜色", <ColorPicker color={color} setColor={colorChange("color")} />)}
         {cardItemElement(
           "对齐方式",
@@ -54,13 +54,10 @@ const TextStyleSettings = () => {
               return (
                 <div
                   key={value}
-                  className={classNames(
-                    textAlign === value ? "border-gray-500 text-gray-500" : "border-gray-200 text-gray-200 hover:border-gray-500 hover:text-gray-500",
-                    "rounded-md w-10 h-10 border text-center ml-2 cursor-pointer transition-all font-bold select-none"
-                  )}
+                  className={classNames(textAlign === value ? "align-style-item-active" : "align-style-item-un_active", "align-style-item")}
                   onClick={() => otherStylesChange("textAlign", value)}
                 >
-                  <FontAwesomeIcon icon={icon} className="h-10 w-10" />
+                  <FontAwesomeIcon icon={icon} className="tag-style-size" />
                 </div>
               );
             })}
@@ -68,7 +65,7 @@ const TextStyleSettings = () => {
         )}
         {cardItemElement(
           "字体大小",
-          <Select className="w-32" value={fontFamily} onChange={inputChange("fontFamily")}>
+          <Select className="input-width" value={fontFamily} onChange={inputChange("fontFamily")}>
             {fontFamilyList.map((item) => (
               <Select.Option key={item} value={item}>
                 {item}
@@ -76,11 +73,11 @@ const TextStyleSettings = () => {
             ))}
           </Select>
         )}
-        {cardItemElement("字体大小", <InputNumber min={0} className="w-32" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />)}
+        {cardItemElement("字体大小", <InputNumber min={0} className="input-width" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />)}
         {cardItemElement(
           "行高",
           <InputNumber
-            className="w-32"
+            className="input-width"
             addonAfter="%"
             min={0}
             value={Number(lineHeight.replace("%", ""))}
@@ -91,7 +88,7 @@ const TextStyleSettings = () => {
     );
   };
   return (
-    <div className="my-10">
+    <div className="margin-y-30">
       {textStylesElement()}
       {PaddingStylesElement()}
     </div>

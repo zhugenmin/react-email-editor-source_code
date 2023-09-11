@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Popover } from "antd";
 import { ChromePicker } from "react-color";
 
@@ -17,7 +17,7 @@ const ColorPicker = ({ color, setColor }) => {
       open={popoverOpen}
       onOpenChange={setPopoverOpen}
     >
-      <button className="rounded-lg border h-10 w-10" style={{ background: color }}></button>
+      <button className="color-picker-button" style={{ background: color }}></button>
     </Popover>
   );
 };

@@ -45,10 +45,10 @@ const DividerStyleSettings = () => {
 
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 分割线样式</div>
+        <div className="right-setting-block-item-title"> 分割线样式</div>
         {cardItemElement(
           "字体大小",
-          <Select className="w-32" value={borderTopStyle} onChange={inputChange("borderTopStyle")}>
+          <Select className="input-width" value={borderTopStyle} onChange={inputChange("borderTopStyle")}>
             {dividerType.map((item) => (
               <Select.Option key={item.value} value={item.value}>
                 {item.label}
@@ -58,10 +58,10 @@ const DividerStyleSettings = () => {
         )}
         {cardItemElement(
           "分割线宽度",
-          <InputNumber min={0} className="w-32" addonAfter="px" value={borderTopWidth} onChange={inputChange("borderTopWidth")} />
+          <InputNumber min={0} className="input-width" addonAfter="px" value={borderTopWidth} onChange={inputChange("borderTopWidth")} />
         )}
         {cardItemElement("分割线颜色", <ColorPicker color={borderTopColor} setColor={colorChange("borderTopColor")} />)}
-        <div className="text-slate-400 font-semibold"> 分割线宽度</div>
+        <div className="card-item-title"> 分割线宽度</div>
         <Slider value={Number(width.replace("%", ""))} onChange={(value) => inputChange("width")(value + "%")} />
         {cardItemElement(
           "对齐方式",
@@ -75,19 +75,16 @@ const DividerStyleSettings = () => {
               return (
                 <div
                   key={value}
-                  className={classNames(
-                    textAlign === value ? "border-gray-500 text-gray-500" : "border-gray-200 text-gray-200 hover:border-gray-500 hover:text-gray-500",
-                    "rounded-md w-10 h-10 border text-center ml-2 cursor-pointer transition-all font-bold select-none"
-                  )}
+                  className={classNames(textAlign === value ? "align-style-item-active" : "align-style-item-un_active", "align-style-item")}
                   onClick={() => updateContentTextAlign(value)}
                 >
-                  <FontAwesomeIcon icon={icon} className="h-10 w-10" />
+                  <FontAwesomeIcon icon={icon} className="tag-style-size" />
                 </div>
               );
             })}
           </div>
         )}
-        <div className="text-slate-400 font-semibold"> 内边距设置</div>
+        <div className="card-item-title"> 内边距设置</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),
@@ -100,7 +97,7 @@ const DividerStyleSettings = () => {
       </>
     );
   };
-  return <div className="my-10">{dividerStyleSettings()}</div>;
+  return <div className="margin-y-30">{dividerStyleSettings()}</div>;
 };
 
 export default DividerStyleSettings;

@@ -14,6 +14,7 @@ import {
 } from "./reducers";
 import dataToHtml from "./utils/dataToHTML";
 import Main from "./components/Main";
+import "./assets/App.css";
 
 const EmailEditor = forwardRef(({ defaultBlockList }, ref) => {
   const [state, dispatch] = useReducer(reducer, {

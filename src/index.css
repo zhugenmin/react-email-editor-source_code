@@ -1,7 +1,9 @@
 @import '~antd/dist/antd.compact.css';
-@import './assets/App.css';
-@import './assets/RichText.css';
-@import './assets/ImageBlock.css';
+
+#root {
+  width: 100%;
+  height: 100%;
+}
 
 body {
   margin: 0;

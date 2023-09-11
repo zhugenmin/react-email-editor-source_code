@@ -15,8 +15,8 @@ const useLayout = () => {
 
   const cardItemElement = (title, dom) => {
     return (
-      <div className="flex items-center justify-between mb-4">
-        <div className="text-slate-400 font-semibold">{title}</div>
+      <div className="card-item">
+        <div className="card-item-title">{title}</div>
         <div>{dom}</div>
       </div>
     );

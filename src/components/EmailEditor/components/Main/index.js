@@ -258,8 +258,8 @@ const Main = () => {
 
   return (
     <>
-      <div className="h-full min-w-[1080px] overflow-x-auto" onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragLeave}>
-        <div className="h-full Dashboard flex justify-between" onClick={blurCurrentItem}>
+      <div className="email-editor" onDragOver={onDragOver} onDrop={onDrop} onDragLeave={onDragLeave}>
+        <div className="email-editor-main" onClick={blurCurrentItem}>
           <LeftSideBar clearStyles={clearStyles} />
           <Preview clearStyles={clearStyles} />
           <RightSetting />

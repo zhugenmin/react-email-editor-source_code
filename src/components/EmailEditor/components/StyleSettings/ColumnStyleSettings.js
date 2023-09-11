@@ -110,15 +110,12 @@ const ColumnStyleSettings = () => {
   const columnListElement = () => {
     return (
       <>
-        <div className="mb-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 设置列布局</div>
+        <div className="right-setting-block-item-title"> 设置列布局</div>
         <div>
           {columnList.map((item, index) => {
             return (
               <div
-                className={classNames(
-                  currentItem.data.type === item.key ? "border-slate-400" : "hover:shadow-md border-gray-300",
-                  "w-[100%] rounded-lg h-12 bg-gray-100 border-2 transition-all cursor-pointer flex mt-4"
-                )}
+                className={classNames(currentItem.data.type === item.key ? "column-item-active" : "column-item-un_active", "column-item")}
                 key={index}
                 onClick={columnChange(item.key)}
               >
@@ -129,9 +126,9 @@ const ColumnStyleSettings = () => {
                       key={index}
                       style={{ width }}
                       className={classNames(
-                        isLast ? "" : "border-r-2",
-                        currentItem.data.type === item.key ? "border-slate-400" : "border-gray-300",
-                        "h-full"
+                        isLast ? "" : "column-item-border-right",
+                        currentItem.data.type === item.key ? "column-item-active" : "column-item-un_active",
+                        "height-full"
                       )}
                     ></span>
                   );
@@ -147,7 +144,7 @@ const ColumnStyleSettings = () => {
   const columnContentElement = () => {
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 列样式</div>
+        <div className="right-setting-block-item-title"> 列样式</div>
         <Tabs
           defaultActiveKey="1"
           animated={{
@@ -189,7 +186,7 @@ const ColumnStyleSettings = () => {
     const contentBackground = findStyleItem(currentItem.data.styles, "contentBackground");
     return (
       <>
-        <div className="my-8 text-lg text-gray-700 border-y -mx-8 px-8 py-4 bg-slate-100"> 行样式</div>
+        <div className="right-setting-block-item-title"> 行样式</div>
         {cardItemElement("背景颜色", <ColorPicker color={backgroundColor} setColor={colorChange("backgroundColor")} />)}
         {cardItemElement("内容背景颜色", <ColorPicker color={contentBackground} setColor={colorChange("contentBackground")} />)}
         <PaddingSettings
@@ -207,16 +204,18 @@ const ColumnStyleSettings = () => {
 
   return (
     <>
-      <div className="my-10">
+      <div className="margin-y-30">
         {columnListElement()}
         {columnContentElement()}
         {columnStylesElement()}
       </div>
       <Modal title="删除列" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={400}>
-        <p className="my-10">
+        <p className="margin-y-30">
           您确定删除多余的
           {currentColumnType && (
-            <span className="mx-1 font-semibold">{currentItem.data.children.length - defaultColumnsSettings[currentColumnType].children.length}</span>
+            <span className="column-modal-context">
+              {currentItem.data.children.length - defaultColumnsSettings[currentColumnType].children.length}
+            </span>
           )}
           列吗？
         </p>

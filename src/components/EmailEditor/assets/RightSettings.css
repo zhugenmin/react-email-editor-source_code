@@ -1,0 +1,222 @@
+.right-settings {
+    width: 300px;
+    height: 100%;
+    overflow: auto;
+    padding: 36px 24px;
+    border-left: 1px solid var(--border-color);
+}
+
+.right-setting-block-title {
+    padding-left: 6px;
+    font-size: 16px;
+    line-height: 16px;
+    color: var(--right-settings-font-color);
+    font-weight: 600;
+    border-left: 4px solid #3B82F6;
+}
+
+.subject-settings {
+    font-size: 15px;
+    height: 21px;
+    font-weight: 600;
+    margin-bottom: 30;
+}
+
+.card-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.card-item-title {
+    color: var(--right-settings-title-font-color);
+    font-weight: 600;
+}
+
+.pre_header {
+    color: var(--right-settings-title-font-color);
+    font-weight: 600;
+}
+
+
+.pre_header-desc {
+    font-size: 10.5px;
+    line-height: 15px;
+    margin-top: 6px;
+    color: var(--right-settings-title-font-color);
+}
+
+.right-setting-block-item-title {
+    margin: 24px -24px;
+    padding: 12px 24px;
+    font-size: 13.5px;
+    line-height: 21px;
+    color: var(--right-settings-block-title-font-color);
+    border-top: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
+    background-color: var(--right-settings-block-title-background-color);
+}
+
+.link-tag {
+    text-align: center;
+    color: var(--blue-500);
+    border: 1px solid var(--blue-500);
+    padding: 2px 6px;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.switch-active {
+    background-color: var(--blue-500);
+}
+
+.switch-disabled {
+    background-color: var(--gray-400);
+}
+
+
+
+.input-width {
+    width: 96px;
+}
+
+.align-style-item {
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid;
+    text-align: center;
+    margin-left: 6px;
+    cursor: pointer;
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    font-weight: bold;
+    user-select: none;
+}
+
+.align-style-item-active {
+    border-color: var(--align-style-item-active-color);
+    color: var(--align-style-item-active-color);
+}
+
+.align-style-item-un_active {
+    border-color: var(--align-style-item-un-active-color);
+    color: var(--align-style-item-un-active-color);
+}
+
+.align-style-item-un_active:hover {
+    border-color: var(--align-style-item-active-color);
+    color: var(--align-style-item-active-color);
+}
+
+.padding-settings {
+    margin-top: 12px;
+    margin-bottom: 12px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.color-picker-button {
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--border-color);
+}
+
+.social-link-item {
+    margin-bottom: 12px;
+    position: relative;
+    border-width: 1px;
+}
+
+.social-link-item-drag_start::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 40;
+}
+
+.social-link-item-current {
+    opacity: 0.4;
+    border-style: dashed;
+    border-color: #000;
+}
+
+.social-link-item-content {
+    padding: 12px;
+    border-radius: 9px;
+    user-select: none;
+    box-shadow: rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(0, 0, 0, 0) 0px 0px 0px 0px, rgba(45, 100, 188, 0.2) 0px 1px 3px 0px, rgba(45, 100, 188, 0.2) 0px 1px 2px -1px;
+}
+
+.social-link-item-content:hover {
+    box-shadow: 0 3px 12px 0 rgba(45, 100, 188, 0.2);
+}
+
+.social-link-item-img {
+    width: 27px;
+    height: 27px;
+    margin-right: 6px;
+}
+
+.social-link-item-icon {
+    transition-property: all;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+    padding: 6px;
+    border-radius: 100%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 40;
+    cursor: pointer;
+}
+
+.social-link-item-icon-slate:hover {
+    background-color: var(--slate-100);
+}
+
+.social-link-item-icon-red:hover {
+    background-color: var(--red-100);
+}
+
+.tag-style-size {
+    width: 30px;
+    height: 30px;
+}
+
+.social-link-item-icon-svg {
+    font-size: 13.5px;
+    line-height: 21px;
+
+}
+
+.social-link-item-icon-svg-deep {
+    color: var(--start-content-font-color);
+}
+
+.social-link-item-icon-svg-red {
+    color: var(--red-500);
+
+}
+
+.social-link-add {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.social-link-add-img {
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    cursor: pointer;
+}

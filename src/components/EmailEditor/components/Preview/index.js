@@ -34,17 +34,17 @@ const Preview = (props) => {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
+    <div className="preview-main">
       <Header />
-      <div className="py-8 px-6 default-scrollbar" id="preview">
+      <div className="default-scrollbar" id="preview">
         <div
-          className="min-h-full mx-auto transition-all border"
+          className="preview-content"
           style={{
             width: previewMode === "desktop" ? "100%" : 364,
             ...bodySettings.styles,
           }}
         >
-          <div className="m-auto" style={{ maxWidth: "100%", width: "100%" }}>
+          <div className="margin-auto" style={{ maxWidth: "100%", width: "100%" }}>
             {blockList.length ? (
               <>
                 {blockList.map((block, index) => {
@@ -63,7 +63,7 @@ const Preview = (props) => {
             ) : (
               <div
                 data-name="dragEmpty"
-                className="start-to-add m-auto"
+                className="start-to-add"
                 style={{ width: bodySettings.contentWidth, maxWidth: "100%" }}
                 data-type="empty-block"
                 onDragOver={preventDefault}
