@@ -23,50 +23,6 @@ code {
   height: calc(100vh - 60px);
 }
 
-/* For Webkit-based browsers (Chrome, Safari and Opera) */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-
-/* For IE, Edge and Firefox */
-.scrollbar-hide {
-  /* IE and Edge */
-  -ms-overflow-style: none;
-  /* Firefox */
-  scrollbar-width: none;
-}
-
-.default-scrollbar::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-.default-scrollbar::-webkit-scrollbar-track {
-  background-color: #f9fafb;
-  border-radius: 8px;
-}
-
-.default-scrollbar::-webkit-scrollbar-thumb {
-  background-color: #d1d5db;
-  border-radius: 8px;
-  height: 30px;
-}
-
-.default-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: #9ca3af;
-}
-
-.default-scrollbar::-webkit-scrollbar-thumb:active {
-  background-color: #9ca3af;
-}
-
-.default-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-  width: 7px;
-  height: 7px;
-}
-
 .dashboard {
   display: flex;
   flex-direction: column;

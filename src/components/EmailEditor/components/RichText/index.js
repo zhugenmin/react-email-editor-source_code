@@ -26,7 +26,7 @@ const RichText = ({ index, textBlock, styles }) => {
       var viewportOffset = richTextRef.current.parentNode?.getBoundingClientRect();
       const preview = document.querySelector("#preview");
       const previewOffset = preview.getBoundingClientRect();
-      if (viewportOffset.top - 140 < 0) {
+      if (viewportOffset.top - 190 < 0) {
         richTextRef.current.style.bottom = "auto";
         richTextRef.current.style.top = "110%";
       } else {
@@ -120,7 +120,7 @@ const RichText = ({ index, textBlock, styles }) => {
           <FontAwesomeIcon icon={faAngleDown} className="richText-select-icon" />
         </div>
         <div className="richText-mask" id={`richText-mask-${type}-${index}`} onClick={hideOptions}></div>
-        <div className="richText-select-option z-[1071]" id={`richText-options-${type}-${index}`}>
+        <div className="richText-select-option" id={`richText-options-${type}-${index}`}>
           {selectList.map((item) => {
             return (
               <div

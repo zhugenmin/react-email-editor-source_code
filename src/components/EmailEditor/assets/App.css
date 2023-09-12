@@ -6,6 +6,10 @@
 @import './Columns.css';
 @import './RightSettings.css';
 
+.email-editor * {
+  box-sizing: border-box;
+}
+
 :root {
   --block-active-border: rgb(76, 185, 234);
   --block-hover-border: #6FA4BD;

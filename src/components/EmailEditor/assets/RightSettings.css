@@ -94,6 +94,9 @@
     transition-duration: 150ms;
     font-weight: bold;
     user-select: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .align-style-item-active {

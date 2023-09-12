@@ -60,7 +60,7 @@ const blockConfigsList = [
       desktop: {
         fontSize: 14,
         fontFamily: "sans-serif",
-        color: "#000",
+        color: undefined,
         lineHeight: "140%",
         paddingTop: 12,
         paddingBottom: 12,
@@ -81,7 +81,7 @@ const blockConfigsList = [
         fontSize: 22,
         lineHeight: "140%",
         fontFamily: "sans-serif",
-        color: "#000",
+        color: undefined,
         paddingTop: 12,
         paddingBottom: 12,
         paddingLeft: 12,

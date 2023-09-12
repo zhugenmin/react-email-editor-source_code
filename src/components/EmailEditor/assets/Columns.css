@@ -150,6 +150,9 @@
     align-items: center;
     text-align: center;
     outline-offset: -1px;
+    height: 96px;
+    position: relative;
+    padding: 8px;
 }
 
 .block-empty-content-tools {

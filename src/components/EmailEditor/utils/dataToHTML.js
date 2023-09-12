@@ -9,7 +9,7 @@ const createStyleString = (className, styles) => {
   };
 
   for (let item of Object.entries(styles.desktop)) {
-    if (item[0] !== "contentBackground") {
+    if (item[1] && item[0] !== "contentBackground") {
       stylesConfig.desktop += `${kebabCase(item[0])}:${typeof item[1] === "number" ? item[1] + "px" : item[1]};`;
     }
   }
@@ -17,7 +17,7 @@ const createStyleString = (className, styles) => {
   if (Object.keys(styles.mobile).length) {
     let mobile = "";
     for (let item of Object.entries(styles.mobile)) {
-      if (item[0] !== "contentBackground") {
+      if (item[1] && item[0] !== "contentBackground") {
         mobile += `${kebabCase(item[0])}:${typeof item[1] === "number" ? item[1] + "px" : item[1]} !important;`;
       }
     }
@@ -199,6 +199,7 @@ const dataToHtml = ({ bodySettings, blockList }) => {
 
   table {
     width: 100%;
+    color:unset;
   }
 
   table, tr, td {
@@ -225,6 +226,7 @@ const dataToHtml = ({ bodySettings, blockList }) => {
 </style>
   </head>
   <body>
+  <div style="opacity:0;">${bodySettings.preHeader}</div>
   <div style="background-color:${bodySettings.styles.backgroundColor};color:${bodySettings.styles.color}; font-family:${bodySettings.styles.fontFamily};"> ${content}</div>
   </body>
   </html>`;
