@@ -21,9 +21,9 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="dashboard">
       <Header emailEditorEl={emailEditorRef} />
-      <div className="flex-1 overflow-auto">{emailData && <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} />}</div>
+      <div className="dashboard-content">{emailData && <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} />}</div>
     </div>
   );
 }

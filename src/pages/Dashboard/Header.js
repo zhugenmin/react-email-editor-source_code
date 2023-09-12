@@ -10,9 +10,9 @@ const Header = (props) => {
     a.click();
   };
   return (
-    <div className="width-full bg-slate-600 flex justify-between items-center border-none px-6 py-3">
-      <div className="text-white text-4xl font-bold font-sans">Email Editor</div>
-      <button className="px-8 py-3 text-white text-sm rounded-full font-semibold bg-blue-500 hover:bg-blue-600 transition-all" onClick={exportHTML}>
+    <div className="dashboard-header">
+      <div className="dashboard-header-title">Email Editor</div>
+      <button className="dashboard-header-subtitle" onClick={exportHTML}>
         导出html
       </button>
     </div>
