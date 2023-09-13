@@ -105,7 +105,7 @@ const createButtonString = (buttonBlock) => {
   return `<div ${buttonBlock.contentStyleConfig.mobile ? `class="${buttonBlock.contentStyleConfig.className}"` : ""} 
   style="${buttonBlock.contentStyleConfig.desktop}">
     <a ${buttonBlock.styleConfig.mobile ? `class="${buttonBlock.styleConfig.className}"` : ""} 
-    style="${buttonBlock.styleConfig.desktop}" target="_black" link="${buttonBlock.linkURL}">${buttonBlock.text}</a>
+    style="${buttonBlock.styleConfig.desktop}" target="_black" href="https://${buttonBlock.linkURL}">${buttonBlock.text}</a>
   </div>`;
 };
 
@@ -122,11 +122,11 @@ const createSocialLinkString = (socialLinkBlock) => {
   style="${socialLinkBlock.contentStyleConfig.desktop}">
     ${socialLinkBlock.list
       .map((socialLinkItem) => {
-        const { image, title } = socialLinkItem;
-        return `<div style="${socialLinkBlock.styleConfig.desktop};display:inline-block;">
+        const { image, title, linkURL } = socialLinkItem;
+        return `<a target="_black" href="https://${linkURL}" style="${socialLinkBlock.styleConfig.desktop};display:inline-block;">
         <img src="${image}" alt="${title}" style="width:${socialLinkBlock.imageWidth}px;" 
         ${socialLinkBlock.styleConfig.mobile ? `class="${socialLinkBlock.styleConfig.className}"` : ""}/> 
-      </div>`;
+      </a>`;
       })
       .join("")}
   </div>`;
@@ -189,6 +189,8 @@ const dataToHtml = ({ bodySettings, blockList }) => {
   <style type="text/css">
   *{
     margin: 0;
+    padding: 0;
+    border: none;
     box-sizing: border-box;
   }
 
