@@ -8,9 +8,12 @@ import PaddingSettings from "./PaddingSettings";
 import useLayout from "../../utils/useStyleLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
+import useTranslation from "../../translation";
 
 const DividerStyleSettings = () => {
   const { currentItem, previewMode } = useContext(GlobalContext);
+  const { t } = useTranslation();
+
   const { findStyleItem, cardItemElement, colorChange, updateItemStyles, inputChange } = useLayout();
 
   const updateContentStylesPadding = (padding) => {
@@ -38,16 +41,16 @@ const DividerStyleSettings = () => {
     const borderTopWidth = findStyleItem(currentItem.data.styles, "borderTopWidth");
     const borderTopStyle = findStyleItem(currentItem.data.styles, "borderTopStyle");
     const dividerType = [
-      { label: "实线", value: "solid" },
-      { label: "虚线（点）", value: "dotted" },
-      { label: "虚线（破折号）", value: "dashed" },
+      { label: t("solid"), value: "solid" },
+      { label: t("dotted"), value: "dotted" },
+      { label: t("dashed"), value: "dashed" },
     ];
 
     return (
       <>
-        <div className="right-setting-block-item-title"> 分割线样式</div>
+        <div className="right-setting-block-item-title"> {t("divider_styles")}</div>
         {cardItemElement(
-          "字体大小",
+          t("divider_type"),
           <Select className="input-width" value={borderTopStyle} onChange={inputChange("borderTopStyle")}>
             {dividerType.map((item) => (
               <Select.Option key={item.value} value={item.value}>
@@ -57,14 +60,14 @@ const DividerStyleSettings = () => {
           </Select>
         )}
         {cardItemElement(
-          "分割线宽度",
+          t("height"),
           <InputNumber min={0} className="input-width" addonAfter="px" value={borderTopWidth} onChange={inputChange("borderTopWidth")} />
         )}
-        {cardItemElement("分割线颜色", <ColorPicker color={borderTopColor} setColor={colorChange("borderTopColor")} />)}
-        <div className="card-item-title"> 分割线宽度</div>
+        {cardItemElement(t("divider_color"), <ColorPicker color={borderTopColor} setColor={colorChange("borderTopColor")} />)}
+        <div className="card-item-title">{t("width")}</div>
         <Slider value={Number(width.replace("%", ""))} onChange={(value) => inputChange("width")(value + "%")} />
         {cardItemElement(
-          "对齐方式",
+          t("align"),
           <div className="flex justify-center items-center">
             {[
               { icon: faAlignLeft, value: "left" },
@@ -84,7 +87,7 @@ const DividerStyleSettings = () => {
             })}
           </div>
         )}
-        <div className="card-item-title"> 内边距设置</div>
+        <div className="card-item-title"> {t("padding_settings")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),

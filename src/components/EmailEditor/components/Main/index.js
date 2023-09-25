@@ -1,16 +1,20 @@
-import { useContext, useCallback } from "react";
+import { useContext, useCallback, useEffect } from "react";
 import { GlobalContext } from "../../reducers";
 import { throttle, deepClone } from "../../utils/helpers";
-import getColumnConfig from "../../configs/getColumnConfig";
 
 import LeftSideBar from "../LeftSideBar";
 import Preview from "../Preview";
 import RightSetting from "../RightSetting";
+import useTranslation from "../../translation";
+import useDataSource from "../../configs/useDataSource";
 
-const Main = () => {
-  const { blockList, setBlockList, currentItem, setCurrentItem, setIsDragStart } = useContext(GlobalContext);
+const Main = ({ language }) => {
+  const { blockList, setBlockList, currentItem, setCurrentItem, setIsDragStart, setLanguage } = useContext(GlobalContext);
+  const { t } = useTranslation();
+  const { getColumnConfig } = useDataSource();
+
   const defaultContentConfig = {
-    name: "请将模块拖放到此处",
+    name: t("drag_block_here"),
     key: "empty",
     width: "100%",
     styles: {
@@ -24,6 +28,10 @@ const Main = () => {
       mobile: {},
     },
   };
+
+  useEffect(() => {
+    setLanguage(language);
+  }, [language]);
 
   // 取消选中
   const blurCurrentItem = (event) => {

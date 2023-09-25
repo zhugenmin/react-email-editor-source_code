@@ -1,5 +1,6 @@
 .right-settings {
     width: 300px;
+    min-width: 300px;
     height: 100%;
     overflow: auto;
     padding: 36px 24px;

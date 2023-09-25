@@ -1,6 +1,8 @@
 import { InputNumber } from "antd";
+import useTranslation from "../../translation";
 
 const PaddingSettings = ({ padding, setPadding }) => {
+  const { t } = useTranslation();
   const paddingChange = (key) => (value) => {
     const newPadding = { ...padding, [key]: value };
     setPadding(newPadding);
@@ -8,10 +10,10 @@ const PaddingSettings = ({ padding, setPadding }) => {
   return (
     <div className="padding-settings">
       {[
-        { name: "上", value: "paddingTop" },
-        { name: "右", value: "paddingRight" },
-        { name: "左", value: "paddingLeft" },
-        { name: "下", value: "paddingBottom" },
+        { name: t("top"), value: "paddingTop" },
+        { name: t("right"), value: "paddingRight" },
+        { name: t("left"), value: "paddingLeft" },
+        { name: t("bottom"), value: "paddingBottom" },
       ].map(({ name, value }) => {
         const style = padding[value];
         return (

@@ -11,17 +11,19 @@ import {
   setSelectionRange,
   setTextRange,
   defaultState,
+  setLanguage,
+  setLanguageLibraries,
 } from "./reducers";
 import dataToHtml from "./utils/dataToHTML";
 import Main from "./components/Main";
 import "./assets/App.css";
 
-const EmailEditor = forwardRef(({ defaultBlockList }, ref) => {
+const EmailEditor = forwardRef(({ defaultBlockList, language = "en", customLanguageLibraries }, ref) => {
   const [state, dispatch] = useReducer(reducer, {
     ...defaultState,
     blockList: defaultBlockList ? defaultBlockList : defaultState.blockList,
+    languageLibraries: customLanguageLibraries,
   });
-
   useImperativeHandle(ref, () => ({
     blockList: state.blockList,
     actionType: state.actionType,
@@ -39,6 +41,8 @@ const EmailEditor = forwardRef(({ defaultBlockList }, ref) => {
         isDragStart: state.isDragStart,
         selectionRange: state.selectionRange,
         textRange: state.textRange,
+        language: state.language,
+        languageLibraries: state.languageLibraries,
         setIsDragStart: (isDragStart) => {
           dispatch(setIsDragStart(isDragStart));
         },
@@ -65,9 +69,15 @@ const EmailEditor = forwardRef(({ defaultBlockList }, ref) => {
         setActionType: (actionType) => {
           dispatch(setActionType(actionType));
         },
+        setLanguage: (language) => {
+          dispatch(setLanguage(language));
+        },
+        setLanguageLibraries: (languageLibraries) => {
+          dispatch(setLanguageLibraries(languageLibraries));
+        },
       }}
     >
-      <Main />
+      <Main language={language} />
     </GlobalContext.Provider>
   );
 });

@@ -5,34 +5,36 @@ import { GlobalContext } from "../../reducers";
 import { InputNumber, Input } from "antd";
 import StyleSettings from "../StyleSettings";
 import useLayout from "../../utils/useStyleLayout";
+import useTranslation from "../../translation";
 
 const RightSetting = () => {
   const { currentItem, isDragStart, bodySettings, setBodySettings } = useContext(GlobalContext);
+  const { t } = useTranslation();
   const { cardItemElement } = useLayout();
   const blockTitle = () => {
     let title = "Block";
     const type = currentItem?.data.key;
     switch (type) {
       case "text":
-        title = "文本设置";
+        title = t("text_settings");
         break;
       case "column":
-        title = "行设置";
+        title = t("column_settings");
         break;
       case "heading":
-        title = "标题设置";
+        title = t("heading_settings");
         break;
       case "button":
-        title = "按钮设置";
+        title = t("button_settings");
         break;
       case "divider":
-        title = "分割线设置";
+        title = t("divider_settings");
         break;
       case "image":
-        title = "图片设置";
+        title = t("image_settings");
         break;
       case "social_link":
-        title = "社交链接设置";
+        title = t("social_link_settings");
         break;
       default:
         break;
@@ -47,13 +49,15 @@ const RightSetting = () => {
   const themeElement = () => {
     return (
       <>
-        <div className="subject-settings">邮件主题设置</div>
-        {cardItemElement("字体颜色", <ColorPicker color={bodySettings.styles.color} setColor={colorChange("color")} />)}
-        {cardItemElement("邮件背景颜色", <ColorPicker color={bodySettings.styles.backgroundColor} setColor={colorChange("backgroundColor")} />)}
-
-        <div>
+        <div className="subject-settings">{t("body_settings")}</div>
+        <div className="margin-top-32">
+          {cardItemElement(t("text_color"), <ColorPicker color={bodySettings.styles.color} setColor={colorChange("color")} />)}
           {cardItemElement(
-            "行高",
+            t("email_theme_background_color"),
+            <ColorPicker color={bodySettings.styles.backgroundColor} setColor={colorChange("backgroundColor")} />
+          )}
+          {cardItemElement(
+            t("line_height"),
             <InputNumber
               className="input-width"
               addonAfter="px"
@@ -63,15 +67,15 @@ const RightSetting = () => {
               onChange={(value) => setBodySettings({ ...bodySettings, contentWidth: value }, "set_body_settings")}
             />
           )}
-        </div>
-        <div>
-          <div className="pre_header">标题文本</div>
-          <Input
-            className="margin-top-12"
-            value={bodySettings.preHeader}
-            onChange={(event) => setBodySettings({ ...bodySettings, preHeader: event.target.value }, "set_body_settings")}
-          />
-          <div className="pre_header-desc">标题是从收件箱查看电子邮件时跟随在主题行之后的简短摘要文本。</div>
+          <div>
+            <div className="pre_header">{t("pre_header")}</div>
+            <Input
+              className="margin-top-12"
+              value={bodySettings.preHeader}
+              onChange={(event) => setBodySettings({ ...bodySettings, preHeader: event.target.value }, "set_body_settings")}
+            />
+            <div className="pre_header-desc">{t("pre_header_description")}</div>
+          </div>
         </div>
       </>
     );

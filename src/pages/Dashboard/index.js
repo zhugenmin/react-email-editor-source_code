@@ -13,6 +13,7 @@ import { useEffect } from "react";
 function Dashboard() {
   const emailEditorRef = useRef(null);
   const [emailData, setEmailData] = useState(null);
+  const [language, setLanguage] = useState("en");
 
   useEffect(() => {
     setTimeout(() => {
@@ -22,8 +23,8 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <Header emailEditorEl={emailEditorRef} />
-      <div className="dashboard-content">{emailData && <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} />}</div>
+      <Header emailEditorEl={emailEditorRef} setLanguage={setLanguage} />
+      <div className="dashboard-content">{emailData && <EmailEditor ref={emailEditorRef} defaultBlockList={emailData} language={language} />}</div>
     </div>
   );
 }

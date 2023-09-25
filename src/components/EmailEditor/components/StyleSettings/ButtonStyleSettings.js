@@ -7,9 +7,11 @@ import ColorPicker from "../ColorPicker";
 import PaddingSettings from "./PaddingSettings";
 import useLayout from "../../utils/useStyleLayout";
 import { deepClone } from "../../utils/helpers";
+import useTranslation from "../../translation";
 
 const ButtonStyleSettings = () => {
   const { currentItem, previewMode } = useContext(GlobalContext);
+  const { t } = useTranslation();
   const { findStyleItem, cardItemElement, colorChange, paddingChange, inputChange, updateItemStyles } = useLayout();
 
   const buttonActionElement = () => {
@@ -23,9 +25,9 @@ const ButtonStyleSettings = () => {
 
     return (
       <div>
-        <div className="right-setting-block-item-title">点击按钮触发</div>
-        {cardItemElement("按钮类型", <div className="link-tag">超链接</div>)}
-        <div className="card-item-title">超链接URL</div>
+        <div className="right-setting-block-item-title">{t("button_action")}</div>
+        {cardItemElement(t("action_type"), <div className="link-tag">{t("link")}</div>)}
+        <div className="card-item-title">{t("link_url")}</div>
         <div className="margin-top-6">
           <Input addonBefore="https://" value={linkURL} onChange={linkChange} />
         </div>
@@ -45,7 +47,7 @@ const ButtonStyleSettings = () => {
 
     return (
       <>
-        <div className="right-setting-block-item-title"> 内边距设置</div>
+        <div className="right-setting-block-item-title"> {t("padding_settings")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),
@@ -70,9 +72,9 @@ const ButtonStyleSettings = () => {
 
     return (
       <>
-        <div className="right-setting-block-item-title">按钮样式</div>
+        <div className="right-setting-block-item-title">{t("button_styles")}</div>
         {cardItemElement(
-          "宽度自适应",
+          t("width_auto"),
           <Switch
             checked={width === "auto"}
             className={classNames(width === "auto" ? "switch-active" : "switch-disabled")}
@@ -83,10 +85,10 @@ const ButtonStyleSettings = () => {
           />
         )}
         {width !== "auto" && <Slider value={Number(width.replace("%", ""))} onChange={(value) => inputChange("width")(value + "%")} />}
-        {cardItemElement("字体颜色", <ColorPicker color={color} setColor={colorChange("color")} />)}
-        {cardItemElement("按钮颜色", <ColorPicker color={backgroundColor} setColor={colorChange("backgroundColor")} />)}
+        {cardItemElement(t("font_color"), <ColorPicker color={color} setColor={colorChange("color")} />)}
+        {cardItemElement(t("button_color"), <ColorPicker color={backgroundColor} setColor={colorChange("backgroundColor")} />)}
         {cardItemElement(
-          "字体大小",
+          t("font_family"),
           <Select className="input-width" value={fontFamily} onChange={inputChange("fontFamily")}>
             {fontFamilyList.map((item) => (
               <Select.Option key={item} value={item}>
@@ -95,9 +97,12 @@ const ButtonStyleSettings = () => {
             ))}
           </Select>
         )}
-        {cardItemElement("字体大小", <InputNumber min={0} className="input-width" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />)}
         {cardItemElement(
-          "行高",
+          t("font_size"),
+          <InputNumber min={0} className="input-width" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />
+        )}
+        {cardItemElement(
+          t("line_height"),
           <InputNumber
             className="input-width"
             addonAfter="%"
@@ -106,7 +111,7 @@ const ButtonStyleSettings = () => {
             onChange={(value) => inputChange("lineHeight")(value + "%")}
           />
         )}
-        <div className="card-item-title">按钮内边距</div>
+        <div className="card-item-title">{t("button_padding")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),

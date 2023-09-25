@@ -2,25 +2,29 @@ import { useContext, useState } from "react";
 import { GlobalContext } from "../../reducers";
 import classNames from "../../utils/classNames";
 import { Modal, Tabs } from "antd";
-import { defaultColumnsSettings } from "../../configs/defaultColumnsSettings";
+
 import { deepClone } from "../../utils/helpers";
 import ColorPicker from "../ColorPicker";
 import PaddingSettings from "./PaddingSettings";
 import useStyleLayout from "../../utils/useStyleLayout";
+import useDataSource from "../../configs/useDataSource";
+import useTranslation from "../../translation";
 
 const ColumnStyleSettings = () => {
   const { currentItem, previewMode } = useContext(GlobalContext);
+  const { t } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentColumnType, setCurrentColumnType] = useState(null);
   const { findStyleItem, cardItemElement, updateItemStyles, colorChange, paddingChange } = useStyleLayout();
+  const { columnsSetting } = useDataSource();
 
   const columnChange = (type) => () => {
-    if (currentItem.data.children.length > defaultColumnsSettings[type].children.length) {
+    if (currentItem.data.children.length > columnsSetting[type].children.length) {
       setIsModalOpen(true);
       setCurrentColumnType(type);
       return;
     }
-    const newColumnConfig = defaultColumnsSettings[type];
+    const newColumnConfig = columnsSetting[type];
     const newData = {
       ...currentItem.data,
       ...newColumnConfig,
@@ -36,7 +40,7 @@ const ColumnStyleSettings = () => {
   };
 
   const handleOk = () => {
-    const newColumnConfig = defaultColumnsSettings[currentColumnType];
+    const newColumnConfig = columnsSetting[currentColumnType];
     const newData = {
       ...currentItem.data,
       ...newColumnConfig,
@@ -110,7 +114,7 @@ const ColumnStyleSettings = () => {
   const columnListElement = () => {
     return (
       <>
-        <div className="right-setting-block-item-title"> 设置列布局</div>
+        <div className="right-setting-block-item-title"> {t("columns")}</div>
         <div>
           {columnList.map((item, index) => {
             return (
@@ -144,7 +148,7 @@ const ColumnStyleSettings = () => {
   const columnContentElement = () => {
     return (
       <>
-        <div className="right-setting-block-item-title"> 列样式</div>
+        <div className="right-setting-block-item-title"> {t("column_settings")}</div>
         <Tabs
           defaultActiveKey="1"
           animated={{
@@ -155,12 +159,12 @@ const ColumnStyleSettings = () => {
             const key = index + 1;
             const backgroundColor = findStyleItem(item.styles, "backgroundColor");
             return {
-              label: `列 ${key}`,
+              label: `${t("column")} ${key}`,
               key: key,
               children: (
                 <>
                   {cardItemElement(
-                    "背景颜色",
+                    t("content_background_color"),
                     <ColorPicker color={backgroundColor} setColor={({ hex }) => changeColumnList("backgroundColor", index)(hex)} />
                   )}
                   <PaddingSettings
@@ -186,9 +190,9 @@ const ColumnStyleSettings = () => {
     const contentBackground = findStyleItem(currentItem.data.styles, "contentBackground");
     return (
       <>
-        <div className="right-setting-block-item-title"> 行样式</div>
-        {cardItemElement("背景颜色", <ColorPicker color={backgroundColor} setColor={colorChange("backgroundColor")} />)}
-        {cardItemElement("内容背景颜色", <ColorPicker color={contentBackground} setColor={colorChange("contentBackground")} />)}
+        <div className="right-setting-block-item-title"> {t("column_styles")}</div>
+        {cardItemElement(t("background_color"), <ColorPicker color={backgroundColor} setColor={colorChange("backgroundColor")} />)}
+        {cardItemElement(t("content_background_color"), <ColorPicker color={contentBackground} setColor={colorChange("contentBackground")} />)}
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),
@@ -209,16 +213,25 @@ const ColumnStyleSettings = () => {
         {columnContentElement()}
         {columnStylesElement()}
       </div>
-      <Modal title="删除列" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={400}>
-        <p className="margin-y-30">
-          您确定删除多余的
-          {currentColumnType && (
-            <span className="column-modal-context">
-              {currentItem.data.children.length - defaultColumnsSettings[currentColumnType].children.length}
-            </span>
-          )}
-          列吗？
-        </p>
+      <Modal
+        title={t("column_delete")}
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        width={400}
+        okText={t("confirm")}
+        cancelText={t("cancel")}
+      >
+        <p
+          className="margin-y-30"
+          dangerouslySetInnerHTML={{
+            __html: t("column_delete_desc", {
+              count: `<span class="column-modal-context">
+              ${currentColumnType ? currentItem.data.children.length - columnsSetting[currentColumnType].children.length : 0}
+            </span>`,
+            }),
+          }}
+        ></p>
       </Modal>
     </>
   );

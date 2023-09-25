@@ -7,9 +7,11 @@ import PaddingSettings from "./PaddingSettings";
 import useLayout from "../../utils/useStyleLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
+import useTranslation from "../../translation";
 
 const ImageStyleSettings = () => {
   const { currentItem, previewMode } = useContext(GlobalContext);
+  const { t } = useTranslation();
   const { findStyleItem, cardItemElement, inputChange, updateItemStyles } = useLayout();
 
   const actionSettings = () => {
@@ -25,9 +27,9 @@ const ImageStyleSettings = () => {
 
     return (
       <>
-        <div className="right-setting-block-item-title">点击图片触发</div>
-        {cardItemElement("按钮类型", <div className="link-tag">超链接</div>)}
-        <div className="card-item-title">超链接URL</div>
+        <div className="right-setting-block-item-title">{t("image_action")}</div>
+        {cardItemElement(t("action_type"), <div className="link-tag">{t("link")}</div>)}
+        <div className="card-item-title">{t("link_url")}</div>
         <div className="margin-top-6">
           <Input addonBefore="https://" value={linkURL} onChange={linkChange} />
         </div>
@@ -46,14 +48,22 @@ const ImageStyleSettings = () => {
 
     return (
       <>
-        <div className="right-setting-block-item-title">图片链接</div>
-        <div className="card-item-title">图片URL</div>
-        <div className="my-2">
-          <Input value={src} onChange={linkChange("src")} />
+        <div className="right-setting-block-item-title">{t("image_settings")}</div>
+        <div className="card-item">
+          <div className="width-full">
+            <div className="card-item-title">{t("image_url")}</div>
+            <div className="margin-top-6">
+              <Input value={src} onChange={linkChange("src")} />
+            </div>
+          </div>
         </div>
-        <div className="card-item-title">图片alt</div>
-        <div className="my-2">
-          <Input value={alt} onChange={linkChange("alt")} />
+        <div className="card-item">
+          <div className="width-full">
+            <div className="card-item-title">{t("image_alt")}</div>
+            <div className="margin-top-6">
+              <Input value={alt} onChange={linkChange("alt")} />
+            </div>
+          </div>
         </div>
       </>
     );
@@ -82,9 +92,9 @@ const ImageStyleSettings = () => {
     const textAlign = findStyleItem(currentItem.data.contentStyles, "textAlign");
     return (
       <>
-        <div className="right-setting-block-item-title">图片样式设置</div>
+        <div className="right-setting-block-item-title">{t("image_styles")}</div>
         {cardItemElement(
-          "宽度自适应",
+          t("width_auto"),
           <Switch
             checked={width === "auto"}
             className={classNames(width === "auto" ? "bg-sky-500" : "bg-gray-400")}
@@ -96,7 +106,7 @@ const ImageStyleSettings = () => {
         )}
         {width !== "auto" && <Slider value={Number(width.replace("%", ""))} onChange={(value) => inputChange("width")(value + "%")} />}
         {cardItemElement(
-          "对齐方式",
+          t("align"),
           <div className="flex justify-center items-center">
             {[
               { icon: faAlignLeft, value: "left" },
@@ -116,7 +126,7 @@ const ImageStyleSettings = () => {
             })}
           </div>
         )}
-        <div className="card-item-title"> 内边距设置</div>
+        <div className="card-item-title">{t("padding_settings")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),

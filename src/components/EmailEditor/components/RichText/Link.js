@@ -29,6 +29,7 @@ const Link = ({ modifyText, setTextContent }) => {
       range.commonAncestorContainer.parentNode.href = value;
     } else {
       let link = document.createElement("a");
+      link.target = "_black";
       link.href = value;
       // 给选中文本添加<link>标签
       range.surroundContents(link);
@@ -44,26 +45,24 @@ const Link = ({ modifyText, setTextContent }) => {
     setInputConfig({ value: "", range: null });
   };
 
+  const addLinkTag = () => {
+    let selection = window.getSelection();
+    let range = selection.getRangeAt(0);
+    const rangeParentNode = range.commonAncestorContainer.parentNode;
+    const rangeIsLink = rangeParentNode.nodeName === "A";
+    const newInputConfig = { ...inputConfig, range };
+    if (rangeIsLink) {
+      newInputConfig.rangeIsLink = true;
+      newInputConfig.value = rangeParentNode.href.replace("https://", "");
+    }
+    setInputConfig(newInputConfig);
+    setIsModalOpen(true);
+    setTextContent();
+  };
+
   return (
     <>
-      <button
-        className={classNames("rich-text-tools-button ", node && "rich-text-tools-button-active")}
-        title="超链接"
-        onClick={() => {
-          let selection = window.getSelection();
-          let range = selection.getRangeAt(0);
-          const rangeParentNode = range.commonAncestorContainer.parentNode;
-          const rangeIsLink = rangeParentNode.nodeName === "A";
-          const newInputConfig = { ...inputConfig, range };
-          if (rangeIsLink) {
-            newInputConfig.rangeIsLink = true;
-            newInputConfig.value = rangeParentNode.href.replace("https://", "");
-          }
-          setInputConfig(newInputConfig);
-          setIsModalOpen(true);
-          setTextContent();
-        }}
-      >
+      <button className={classNames("rich-text-tools-button ", node && "rich-text-tools-button-active")} title="超链接" onClick={addLinkTag}>
         <FontAwesomeIcon icon={faLink} className="rich-text-tools-button-icon" />
       </button>
       <button

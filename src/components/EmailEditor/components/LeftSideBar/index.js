@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "../../utils/classNames";
-import blockConfigsList from "../../configs/blockConfigsList";
+
 import {
   faColumns,
   faMinusSquare,
@@ -19,19 +19,24 @@ import { Input, Spin } from "antd";
 import { deepClone } from "../../utils/helpers";
 
 import fetchPhotos from "../../utils/pexels";
+import useTranslation from "../../translation";
+import useDataSource from "../../configs/useDataSource";
 
 const LeftSideBar = (props) => {
   const { clearStyles } = props;
   const { setCurrentItem, setIsDragStart, blockList, setActionType } = useContext(GlobalContext);
   const [currentSideBarKey, setCurrentSideBarKey] = useState("blocks");
+  const { t } = useTranslation();
+  const { blockConfigsList } = useDataSource();
+
   const sidebarTabsList = [
     {
-      name: "模块",
+      name: t("blocks"),
       icon: faCubes,
       key: "blocks",
     },
     {
-      name: "图片",
+      name: t("photos"),
       icon: faImages,
       key: "photos",
     },
@@ -134,6 +139,10 @@ const LeftSideBar = (props) => {
       });
     }
 
+    const openPexels = () => {
+      window.open("https://www.pexels.com");
+    };
+
     return (
       <motion.div
         className="photo-container"
@@ -145,9 +154,9 @@ const LeftSideBar = (props) => {
       >
         <div className="margin-bottom-12">
           <Input.Search onSearch={searchPhotos} loading={photos.isLoading || photos.scrollLoading} />
-          <a href="https://www.pexels.com" rel="noreferrer" target="_blank" className="pexels-link">
-            由Pexels提供技术支持
-          </a>
+          <div className="pexels-link" onClick={openPexels}>
+            {t("powered_by_pexels")}
+          </div>
         </div>
         <div className="photos-body">
           <div
@@ -206,7 +215,7 @@ const LeftSideBar = (props) => {
               })}
             </div>
           </div>
-          {photos.scrollLoading && <div className="scroll-loading-context">加载中...</div>}
+          {photos.scrollLoading && <div className="scroll-loading-context">{t("loading")}</div>}
           {photos.isLoading && (
             <div className="loading-spinner">
               <Spin />

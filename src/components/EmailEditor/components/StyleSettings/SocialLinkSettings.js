@@ -7,9 +7,11 @@ import PaddingSettings from "./PaddingSettings";
 import useLayout from "../../utils/useStyleLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPen, faTimes, faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
+import useTranslation from "../../translation";
 
 const SocialLinkSettings = () => {
   const { currentItem, previewMode } = useContext(GlobalContext);
+  const { t } = useTranslation();
   const { findStyleItem, paddingChange, updateItemStyles, cardItemElement } = useLayout();
 
   const { list } = currentItem.data;
@@ -124,7 +126,7 @@ const SocialLinkSettings = () => {
   const PaddingStylesElement = () => {
     return (
       <>
-        <div className="right-setting-block-item-title"> 内边距设置</div>
+        <div className="right-setting-block-item-title"> {t("padding_settings")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.contentStyles, "paddingTop"),
@@ -143,9 +145,9 @@ const SocialLinkSettings = () => {
     const width = currentItem.data.imageWidth;
     return (
       <>
-        <div className="right-setting-block-item-title"> 社交链接设置</div>
+        <div className="right-setting-block-item-title"> {t("social_link_settings")}</div>
         {cardItemElement(
-          "对齐方式",
+          t("align"),
           <div className="flex justify-center items-center">
             {[
               { icon: faAlignLeft, value: "left" },
@@ -165,8 +167,11 @@ const SocialLinkSettings = () => {
             })}
           </div>
         )}
-        {cardItemElement("链接大小", <InputNumber min={0} className="input-width" addonAfter="px" value={width} onChange={imageWidthChange} />)}
-        <div className="card-item-title margin-top-18">修改社交链接</div>
+        {cardItemElement(
+          t("social_link_size"),
+          <InputNumber min={0} className="input-width" addonAfter="px" value={width} onChange={imageWidthChange} />
+        )}
+        <div className="card-item-title margin-top-18">{t("social_links")}</div>
         <div
           ref={socialLists}
           onDragOver={dragOver}
@@ -253,7 +258,7 @@ const SocialLinkSettings = () => {
             );
           })}
         </div>
-        <div className="card-item-title margin-top-18">添加社交链接</div>
+        <div className="card-item-title margin-top-18">{t("add_social_link")}</div>
         <div className="social-link-add margin-top-12">
           {socialList.map((item, index) => {
             const { image, title } = item;
@@ -268,7 +273,7 @@ const SocialLinkSettings = () => {
             );
           })}
         </div>
-        <div className="card-item-title margin-top-18"> 间距</div>
+        <div className="card-item-title margin-top-18"> {t("spacing")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),

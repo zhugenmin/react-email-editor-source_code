@@ -8,15 +8,17 @@ import PaddingSettings from "./PaddingSettings";
 import useLayout from "../../utils/useStyleLayout";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faAlignCenter, faAlignLeft, faAlignRight, faAlignJustify } from "@fortawesome/free-solid-svg-icons";
+import useTranslation from "../../translation";
 
 const TextStyleSettings = () => {
   const { currentItem } = useContext(GlobalContext);
+  const { t } = useTranslation();
   const { findStyleItem, cardItemElement, colorChange, paddingChange, otherStylesChange, inputChange } = useLayout();
 
   const PaddingStylesElement = () => {
     return (
       <>
-        <div className="right-setting-block-item-title"> 内边距设置</div>
+        <div className="right-setting-block-item-title">{t("padding_settings")}</div>
         <PaddingSettings
           padding={{
             paddingTop: findStyleItem(currentItem.data.styles, "paddingTop"),
@@ -40,10 +42,10 @@ const TextStyleSettings = () => {
 
     return (
       <>
-        <div className="right-setting-block-item-title">文本样式</div>
-        {cardItemElement("字体颜色", <ColorPicker color={color} setColor={colorChange("color")} />)}
+        <div className="right-setting-block-item-title">{t("text_styles")}</div>
+        {cardItemElement(t("font_color"), <ColorPicker color={color} setColor={colorChange("color")} />)}
         {cardItemElement(
-          "对齐方式",
+          t("text_align"),
           <div className="flex justify-center items-center">
             {[
               { icon: faAlignLeft, value: "left" },
@@ -64,7 +66,7 @@ const TextStyleSettings = () => {
           </div>
         )}
         {cardItemElement(
-          "字体大小",
+          t("font_family"),
           <Select className="input-width" value={fontFamily} onChange={inputChange("fontFamily")}>
             {fontFamilyList.map((item) => (
               <Select.Option key={item} value={item}>
@@ -73,9 +75,12 @@ const TextStyleSettings = () => {
             ))}
           </Select>
         )}
-        {cardItemElement("字体大小", <InputNumber min={0} className="input-width" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />)}
         {cardItemElement(
-          "行高",
+          t("font_size"),
+          <InputNumber min={0} className="input-width" addonAfter="px" value={fontSize} onChange={inputChange("fontSize")} />
+        )}
+        {cardItemElement(
+          t("line_height"),
           <InputNumber
             className="input-width"
             addonAfter="%"

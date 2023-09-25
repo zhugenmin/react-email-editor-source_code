@@ -1,7 +1,6 @@
 .email-editor {
     height: 100%;
-    min-width: 1180px;
-    overflow-x: auto;
+    min-width: 1280px;
 }
 
 .email-editor-main {
@@ -23,9 +22,11 @@
 }
 
 .pexels-link {
+    margin-top: 12px;
     color: #94a3b8;
     font-size: 12px;
     line-height: 15px;
+    cursor: pointer;
 }
 
 .pexels-link:hover {
@@ -118,6 +119,7 @@
 
 .side-bar {
     width: 380px;
+    min-width: 380px;
     background: var(--left-sidebar-background);
     height: 100%;
     display: flex;
@@ -153,7 +155,6 @@
 
 .sidebar-block {
     background-color: #fff;
-    text-transform: uppercase;
     box-shadow: rgb(0 0 0 / 5%) 0px 1px 1px;
     user-select: none;
     cursor: -webkit-grab;
