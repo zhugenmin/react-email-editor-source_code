@@ -4,11 +4,12 @@ import classNames from "../../utils/classNames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowsAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { deepClone } from "../../utils/helpers";
-
 import BlockItems from "../BlockItems";
+import useTranslation from "../../translation";
 
 const Column = (props) => {
   const { block, blockIndex, clearStyles } = props;
+  const { t } = useTranslation();
   const { previewMode, blockList, currentItem, setBlockList, setCurrentItem, setIsDragStart, isDragStart, bodySettings, setActionType } =
     useContext(GlobalContext);
 
@@ -36,7 +37,7 @@ const Column = (props) => {
     item.splice(itemIndex, 1);
     if (item.length === 0) {
       item.push({
-        name: "请将模块拖放到此处",
+        name: t("drag_block_here"),
         key: "empty",
         width: "100%",
         styles: {
@@ -90,7 +91,7 @@ const Column = (props) => {
           <div className="block-empty-content p-4 h-32 relative width-full">
             {isDragStart && currentItem && currentItem.data.key !== "column" && (
               <div className="block-empty-content-tools" onDragOver={preventDefault} data-index={index} data-type="empty-block-item">
-                拖放到此处
+                {t("drag_block_here")}
               </div>
             )}
             {item.name}
@@ -99,7 +100,7 @@ const Column = (props) => {
           <>
             <div className="relative block-content-drag-label-content" data-index={index} data-type="block-item">
               <div className="absolute block-move-top">
-                <span className="block-tools-drag_here">拖放到此处</span>
+                <span className="block-tools-drag_here">{t("drag_block_here")}</span>
               </div>
             </div>
             <div className="block-item">
@@ -162,7 +163,7 @@ const Column = (props) => {
     <>
       <div className="relative block-drag-label-content" data-index={blockIndex} data-position="top">
         <div className="absolute block-move-top">
-          <span className="block-tools-drag_here">拖放到此处</span>
+          <span className="block-tools-drag_here">{t("drag_block_here")}</span>
         </div>
         <div
           className={classNames(
@@ -230,7 +231,7 @@ const Column = (props) => {
                             {isLastKid && (
                               <div className="relative block-content-drag-label-content" data-index={`${blockIndex}-${index}-${itemIndex + 1}`}>
                                 <div className="absolute block-move-bottom">
-                                  <span className="block-tools-drag_here">拖放到此处</span>
+                                  <span className="block-tools-drag_here">{t("drag_block_here")}</span>
                                 </div>
                               </div>
                             )}
