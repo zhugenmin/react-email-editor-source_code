@@ -10,6 +10,7 @@ const en = {
   pre_header_description: "The pre-header is a short summary text that follows the subject line when viewing an email in the inbox.",
   confirm: "Confirm",
   cancel: "Cancel",
+  add_blocks: "Add blocks",
 
   // column block
   column: "Column",

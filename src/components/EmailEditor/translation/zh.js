@@ -10,6 +10,7 @@ const zh = {
   pre_header_description: "预标题是在收件箱中查看电子邮件时跟随主题行的简短摘要文本。",
   confirm: "确认",
   cancel: "取消",
+  add_blocks: "请添加块",
 
   // column block
   column: "列",

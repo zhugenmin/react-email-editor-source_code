@@ -3,9 +3,11 @@ import { GlobalContext } from "../../reducers";
 import Column from "../Column";
 import { throttle } from "../../utils/helpers";
 import Header from "../Header";
+import useTranslation from "../../translation";
 
 const Preview = (props) => {
   const { clearStyles } = props;
+  const { t } = useTranslation();
   const { previewMode, bodySettings, blockList, setSelectionRange } = useContext(GlobalContext);
 
   useEffect(() => {
@@ -56,7 +58,7 @@ const Preview = (props) => {
                 })}
                 <div className="relative block-drag-label-content" data-index={blockList.length} data-position="bottom">
                   <div className="absolute block-move-bottom">
-                    <span className="block-tools-drag_here">拖放到此处</span>
+                    <span className="block-tools-drag_here">{t("drag_block_here")}</span>
                   </div>
                 </div>
               </>
@@ -68,7 +70,7 @@ const Preview = (props) => {
                 data-type="empty-block"
                 onDragOver={preventDefault}
               >
-                请添加块
+                {t("add_blocks")}
               </div>
             )}
           </div>
